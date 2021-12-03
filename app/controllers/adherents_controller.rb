@@ -1,0 +1,5 @@
+class AdherentsController < ApplicationController
+
+
+
+end

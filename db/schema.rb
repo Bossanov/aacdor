@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_133304) do
+ActiveRecord::Schema.define(version: 2021_12_03_140724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "adherents", force: :cascade do |t|
+    t.string "rue", null: false
+    t.string "codepostal", null: false
+    t.string "ville", null: false
+    t.string "departement", null: false
+    t.string "nom", null: false
+    t.string "prenom", null: false
+    t.string "siret", null: false
+    t.string "emploi", null: false
+    t.string "tauxhorairesemaine", null: false
+    t.string "naissance", null: false
+    t.string "sexe", null: false
+    t.string "telephone", null: false
+    t.string "numsecu", null: false
+    t.string "respactnucleaire", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "address"
+    t.index ["user_id"], name: "index_adherents_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +51,5 @@ ActiveRecord::Schema.define(version: 2021_11_30_133304) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "adherents", "users"
 end
