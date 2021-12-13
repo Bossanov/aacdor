@@ -4,4 +4,7 @@ Rails.application.routes.draw do
   root to: "pages#home"
   resources :adherents
   get 'effacer_adherent', to: 'adherents#effacer_adherent'
+  get 'pages/admin'
+  get 'pages/client'
+  get 'pages/pcr'
 end

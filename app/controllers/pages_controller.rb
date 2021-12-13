@@ -3,4 +3,14 @@ class PagesController < ApplicationController
 
   def home
   end
+
+  def client
+  end
+
+  def pcr
+  end
+
+  def admin
+  end
+
 end

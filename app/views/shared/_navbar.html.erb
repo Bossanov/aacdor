@@ -17,6 +17,20 @@
       <li class="nav-item">
         <a class="nav-link " href="#">Nous contacter</a>
       </li>
+      <% if current_user && current_user.statut == "adherent"%>
+        <li class="nav-item">
+          <a class="nav-link " href="<%=pages_client_path%>">Mon espace client</a>
+        </li>
+      <%elsif current_user && current_user.statut == "pcr"%>
+        <li class="nav-item">
+          <a class="nav-link " href="<%=pages_pcr_path%>">Mon espace PCR</a>
+        </li>
+      <%elsif current_user && current_user.statut == "admin"%>
+        <li class="nav-item">
+          <a class="nav-link " href="<%=pages_admin_path%>">Mon espace admin</a>
+        </li>
+      <%end%>
+
     </ul>
     <form class="form-inline my-2 my-lg-0">
 

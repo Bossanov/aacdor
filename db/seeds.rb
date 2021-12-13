@@ -158,3 +158,11 @@ CSV.foreach("db/adherent.csv") do |row|
     end
     prof.save
   end
+
+puts 'création du profil admin '
+useradmin = User.create!(
+        email: "staumont.antoine@me.com",
+        password: "Bossanova1",
+        statut: "admin"
+      )
+useradmin.save

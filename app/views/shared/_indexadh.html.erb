@@ -20,7 +20,11 @@
       <th scope="row"><%=i%></th>
       <td><%=a.nom%></td>
       <td><%=a.prenom%></td>
-      <td><%=a.address%></td>
+      <td><%=a.address%>
+        <% if a.latitude.nil?%>
+         <p><i class="fas fa-exclamation-triangle" style="color:red;">adresse non reconnue</i></p>
+        <%end%>
+      </td>
       <td><%=u.last.email%></td>
       <td><%=a.telephone%></td>
       <td>

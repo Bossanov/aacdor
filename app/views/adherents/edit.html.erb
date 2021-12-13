@@ -2,60 +2,67 @@
   <h1>Modification du profil du Dr <%=@adherent.prenom.capitalize%> <%=@adherent.nom.upcase%></h1>
 
   <%= simple_form_for @adherent do |f| %>
-  <form style="margin: 40px;">
+  <form >
   <div class="form-row">
     <div class="form-group col-md-6">
-      <%= f.input :nom, type: "Nom", class: "form-control", placeholder: "Nom", label: false%>
+      <%= f.input :nom, type: "Nom", class: "form-control", placeholder: "Nom"%>
     </div>
     <div class="form-group col-md-6">
-      <%= f.input :prenom, type: "Prenom", class: "form-control", placeholder: "Prenom", label: false%>
+      <%= f.input :prenom, type: "Prenom", class: "form-control", placeholder: "Prenom"%>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-3">
-      <%= f.input :naissance, type: "Naissance", class: "form-control", placeholder: "Naissance", label: false%>
+      <%= f.input :naissance, type: "Date", class: "form-control", placeholder: "Naissance"%>
     </div>
     <div class="form-group col-md-3">
-      <%= f.input :sexe, type: "Sexe", collection: ["Homme","Femme","NC"] ,class: "form-control", placeholder: "Sexe", label: false%>
+      <%= f.input :sexe, type: "Sexe", collection: ["Homme","Femme","NC"] ,class: "form-control", placeholder: "Sexe"%>
     </div>
     <div class="form-group col-md-6">
-      <%= f.input :telephone, type: "Telephone", class: "form-control", placeholder: "Téléphone", label: false%>
+      <%= f.input :telephone, type: "Telephone", class: "form-control", placeholder: "Téléphone"%>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
-      <%= f.input :rue, type: "Rue", class: "form-control", placeholder: "Rue", label: false%>
+      <%= f.input :rue, type: "Rue", class: "form-control", placeholder: "Rue", label:"Numéro et rue (ne rien mettre d'autres, utiliser pour cela le complément d'adresse)"%>
     </div>
     <div class="form-group col-md-3">
-      <%= f.input :codepostal, type: "Codepostal", class: "form-control", placeholder: "Code postal", label: false%>
+      <%= f.input :codepostal, type: "Codepostal", class: "form-control", placeholder: "Code postal"%>
     </div>
     <div class="form-group col-md-3">
-      <%= f.input :ville, type: "Ville", class: "form-control", placeholder: "Ville", label: false%>
+      <%= f.input :ville, type: "Ville", class: "form-control", placeholder: "Ville"%>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <%= f.input :detailadresse, type: "Detailadresse", class: "form-control", placeholder: "Complément d'adresse (n° appartement, boite postale, lieu-dit...)", label:"Complément d'adresse"%>
+
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4">
-      <%= f.input :departement, type: "Departement", class: "form-control", placeholder: "Département", label: false, collection: ["Nord", "Pas de Calais", "Somme", "Aisne", "Oise"]%>
+      <%= f.input :departement, type: "Departement", class: "form-control", placeholder: "Département", collection: ["Nord", "Pas de Calais", "Somme", "Aisne", "Oise"]%>
     </div>
     <div class="form-group col-md-4">
-      <%= f.input :siret, type: "Siret", class: "form-control", placeholder: "Siret", label: false%>
+      <%= f.input :siret, type: "Siret", class: "form-control", placeholder: "Siret"%>
     </div>
     <div class="form-group col-md-4">
-      <%= f.input :numsecu, type: "Numsecu", class: "form-control", placeholder: "Numéro de sécurité sociale", label: false%>
+      <%= f.input :numsecu, type: "Numsecu", class: "form-control",label:"Numéro de sécurité sociale", placeholder: "Numéro de sécurité sociale"%>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4">
-      <%= f.input :tauxhorairesemaine, type: "Horaire", class: "form-control", placeholder: "Nombre d'heures par semaine", label: false%>
+      <%= f.input :tauxhorairesemaine, type: "Horaire", label:"Nombre d'heures par semaine", class: "form-control", placeholder: "Nombre d'heures par semaine"%>
     </div>
     <div class="form-group col-md-4">
-      <%= f.input :emploi, type: "Emploi", class: "form-control", placeholder: "Emploi", label: false%>
+      <%= f.input :emploi, type: "Emploi", class: "form-control", placeholder: "Emploi"%>
     </div>
     <div class="form-group col-md-4">
-      <%= f.input :respactnucleaire, type: "RAN", class: "form-control", placeholder: "Responsable Activité Nucléaire", label: false, collection: ["oui", "non"]%>
+      <%= f.input :respactnucleaire, type: "RAN", class: "form-control", placeholder: "Responsable Activité Nucléaire", label:"Responsable Activité Nucléaire", collection: ["oui", "non"]%>
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Modifier</button>
+  <a href="<%=adherents_path%>" class="btn btn-primary">Retour</a>
 </form>
 <%end%>
 </container>
