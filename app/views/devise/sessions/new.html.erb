@@ -1,0 +1,29 @@
+
+
+<div class="card text-center" style="margin: 40px;">
+  <div class="card-header">
+    <h1>A.A.C.D.O.R.</h1>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Se connecter</h5>
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="form-inputs">
+    <%= f.input :email,
+                required: false,
+                autofocus: true,
+                input_html: { autocomplete: "email" } %>
+    <%= f.input :password,
+                required: false,
+                input_html: { autocomplete: "current-password" } %>
+    <%= f.input :remember_me, label: "Se souvenir de moi" ,as: :boolean if devise_mapping.rememberable? %>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Se connecter</button>
+    <a class="btn btn-danger" href="<%=root_path%>">Retour</a>
+  </div>
+<% end %>
+  <%= render "devise/shared/links" %>
+  </div>
+
+</div>

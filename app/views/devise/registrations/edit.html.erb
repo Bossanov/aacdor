@@ -1,0 +1,42 @@
+
+<div class="card text-center" style="margin: 40px;">
+  <div class="card-header">
+    <h1>A.A.C.D.O.R.</h1>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Changer son mot de passe</h5>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+    <% end %>
+
+    <%= f.input :current_password,
+                hint: "Nous avons besoin de votre ancien mot de passe pour confirmer le changement",
+                required: true,
+                label: "Ancien mot de passe",
+                input_html: { autocomplete: "current-password" } %>
+    <%= f.input :password,
+                hint: "Laissez la case vide si vous ne voulez pas changer ou appuyer sur retour",
+                required: false,
+                label: "Votre nouveau mot de passe",
+                input_html: { autocomplete: "new-password" } %>
+    <%= f.input :password_confirmation,
+                required: false,
+                label: "Confirmez votre nouveau mot de passe",
+                input_html: { autocomplete: "new-password" } %>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Confirmer</button>
+    <a class="btn btn-danger" href="<%=root_path%>">Retour</a>
+  </div>
+<% end %>
+
+  </div>
+
+</div>
