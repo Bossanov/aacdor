@@ -4,7 +4,7 @@
     <div class="col-md-4">
       <img src="https://maps.googleapis.com/maps/api/streetview?size=200x200&location=<%=@adherent.latitude%>,<%=@adherent.longitude%>
 &fov=80&heading=70&pitch=0
-&key=AIzaSyDwkx6aZ0MtqJKXBTyNlrh8v1pUUf9UxJ4" alt="...">
+&key=<%=ENV['GOOGLE_API_KEY']%>" alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
