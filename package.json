@@ -8,10 +8,12 @@
     "@rails/webpacker": "5.4.3",
     "bootstrap": "4.6",
     "jquery": "^3.6.0",
+    "mapbox-gl": "^2.6.1",
     "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "worker-loader": "^3.0.8"
   },
   "version": "0.1.0",
   "devDependencies": {

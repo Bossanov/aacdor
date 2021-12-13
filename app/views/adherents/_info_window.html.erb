@@ -1,0 +1,7 @@
+<h4>Dr <%= adherent.nom.upcase %> <%= adherent.prenom.capitalize%></h4>
+<p><%= adherent.address %></p>
+<img src="https://maps.googleapis.com/maps/api/streetview?size=200x200&location=<%=adherent.latitude%>,<%=adherent.longitude%>
+&fov=80&heading=70&pitch=0
+&key=AIzaSyDwkx6aZ0MtqJKXBTyNlrh8v1pUUf9UxJ4">
+<a href="<%=adherent_path(adherent)%>" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Voir</a>
+<a href="<%=edit_adherent_path(adherent)%>" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">Modifier</a>
