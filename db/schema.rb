@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_13_143153) do
+ActiveRecord::Schema.define(version: 2021_12_16_151244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,24 @@ ActiveRecord::Schema.define(version: 2021_12_13_143153) do
     t.float "longitude"
     t.string "address"
     t.string "detailadresse"
+    t.bigint "etablissement_id"
+    t.index ["etablissement_id"], name: "index_adherents_on_etablissement_id"
     t.index ["user_id"], name: "index_adherents_on_user_id"
+  end
+
+  create_table "etablissements", force: :cascade do |t|
+    t.string "rue", null: false
+    t.string "codepostal", null: false
+    t.string "ville", null: false
+    t.string "departement", null: false
+    t.string "nom", null: false
+    t.string "address", null: false
+    t.string "typeeta", null: false
+    t.string "siret", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.float "latitude"
+    t.float "longitude"
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,5 +70,6 @@ ActiveRecord::Schema.define(version: 2021_12_13_143153) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "adherents", "etablissements"
   add_foreign_key "adherents", "users"
 end

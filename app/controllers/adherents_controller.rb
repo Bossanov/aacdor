@@ -27,6 +27,7 @@ class AdherentsController < ApplicationController
      else
      @adherent.latitude = gps[0]
      @adherent.longitude = gps[1]
+
      end
     if @adherent.update(adherent_params)
       redirect_to adherent_path(@adherent)

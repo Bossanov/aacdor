@@ -1,22 +1,75 @@
 User.destroy_all
 Adherent.destroy_all
+Etablissement.destroy_all
 xls_file = Roo::Excelx.new('db/adherent.xlsx')
 s = Roo::CSV.new("db/adherent.csv")
 xls_file.to_csv("db/adherent.csv")
 l = 1
 CSV.foreach("db/adherent.csv") do |row|
+    eta = Etablissement.all.count + 1
     num = Adherent.all.count + 1
     puts row[2]
-    puts "création user"
-    puts "taille email"
-    if row[8].nil?
-      puts "email vierge"
+    puts "1 vérification établissement"
+
+    etaunique = Etablissement.where(nom: row[1])
+
+    if etaunique.length == 0
+      puts "1.2 création nouvel établissement"
+
+    if row[4].nil? || row[5].nil? || row[6].nil?
+
+    etablissement = Etablissement.create!(
+      id: eta,
+      nom: row[1],
+      rue:"NC",
+      codepostal:"NC",
+      ville:"NC",
+      departement:"NC",
+      address:" ",
+      siret: "NC",
+      typeeta: "NC"
+
+      )
+
     else
-      puts row[8].length
+
+    dpteta = ""
+        cp = row[5]
+        if cp[0..1] = "59"
+          dpteta = "Nord"
+        elsif cp[0..1] = "62"
+          dpteta = "Pas de Calais"
+        elsif cp[0..1] = "02"
+          dpteta = "Aisne"
+        elsif cp[0..1] = "80"
+          dpteta = "Somme"
+        elsif cp[0..1] = "60"
+          dpteta = "oise"
+        end
+
+
+      etablissement = Etablissement.create!(
+      id: eta,
+      nom: row[1],
+      rue: row[4],
+      codepostal: row[5],
+      ville: row[6],
+      departement: dpteta,
+      address: row[4] + " " + row[5] + " " + row[6],
+      siret: "NC",
+      typeeta: "NC"
+      )
+
     end
+     etablissement.save
+    end
+
+
+    puts "2 création user"
+
+
     ifuser = User.where(email: row[8])
-    puts "taille ifuser"
-    puts ifuser.length
+
     if ifuser.length == 0
       if row[8].nil?
       user = User.create!(
@@ -50,7 +103,8 @@ CSV.foreach("db/adherent.csv") do |row|
       end
     end
     user.save
-    puts "création profile"
+    puts "3 création profile"
+    et = Etablissement.where(nom: row[1])
     if row[4].nil? || row[5].nil? || row[6].nil?
       if row[7].nil?
         prof = Adherent.create!(
@@ -70,7 +124,8 @@ CSV.foreach("db/adherent.csv") do |row|
           numsecu: "NC",
           respactnucleaire: "NC",
           address: "",
-          user_id: user.id
+          user_id: user.id,
+          etablissement_id: et.last.id
         )
       else
         prof = Adherent.create!(
@@ -90,7 +145,8 @@ CSV.foreach("db/adherent.csv") do |row|
           numsecu: "NC",
           respactnucleaire: "NC",
           address: "",
-          user_id: user.id
+          user_id: user.id,
+          etablissement_id: et.last.id
         )
       end
     else
@@ -132,7 +188,8 @@ CSV.foreach("db/adherent.csv") do |row|
           numsecu: "NC",
           respactnucleaire: "NC",
           address: row[4] + " " + row[5] + " " + row[6],
-          user_id: user.id
+          user_id: user.id,
+          etablissement_id: et.last.id
         )
       else
         prof = Adherent.create!(
@@ -152,11 +209,13 @@ CSV.foreach("db/adherent.csv") do |row|
           numsecu: "NC",
           respactnucleaire: "NC",
           address: row[4] + " " + row[5] + " " + row[6],
-          user_id: user.id
+          user_id: user.id,
+          etablissement_id: et.last.id
         )
       end
     end
     prof.save
+
   end
 
 puts 'création du profil admin '
