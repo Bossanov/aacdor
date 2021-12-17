@@ -1,0 +1,184 @@
+<% @etablissement = Etablissement.find_by(id: params[:id])%>
+<div class="card mb-3" style="margin:40px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="https://maps.googleapis.com/maps/api/streetview?size=200x200&location=<%=@etablissement.latitude%>,<%=@etablissement.longitude%>&fov=80&heading=70&pitch=0&key=<%=ENV['GOOGLE_API_KEY']%>" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h3 class="card-title">Etablissement <%=@etablissement.nom.upcase%></h3>
+        <p class="card-text">Adresse : <%=@etablissement.address%></p>
+        <p class="card-text">Téléphone : </p>
+        <p class="card-text">PCR attitré : </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin:40px;">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" id="pills-situation-tab" data-toggle="pill" href="#pills-situation" role="tab" aria-controls="pills-situation" aria-selected="true">Situation</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-etablissement-tab" data-toggle="pill" href="#pills-etablissement" role="tab" aria-controls="pills-etablissement" aria-selected="false">Description</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-civil-tab" data-toggle="pill" href="#pills-civil" role="tab" aria-controls="pills-civil" aria-selected="false">Coordonnées</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-cotisation-tab" data-toggle="pill" href="#pills-cotisation" role="tab" aria-controls="pills-cotisation" aria-selected="false">Cotisations</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-contrat-tab" data-toggle="pill" href="#pills-contrat" role="tab" aria-controls="pills-contrat" aria-selected="false">Contrats</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contacter</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+
+  <div class="tab-pane fade show active" id="pills-situation" role="tabpanel" aria-labelledby="pills-situation-tab">
+  <% if @etablissement.latitude.nil?%>
+    <H2 style="color:red;">Attention l'adresse n'a pas été reconnue, veuillez la vérifier dans l'état-civil.</H2>
+  <%else%>
+    <div style="margin: 40px;">
+      <div id="map"
+        style="width: 100%; height: 600px;"
+        data-markers="<%= @markereta.to_json %>"
+        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+    </div>
+  </div>
+  <%end%>
+
+  <div class="tab-pane fade " id="pills-etablissement" role="tabpanel" aria-labelledby="pills-etablissement-tab">
+
+    <div class="card text-center" style="margin: 40px;">
+      <div class="card-header">
+        <h2>Etablissement <%=@etablissement.nom%></h2>
+      </div>
+      <div class="card-body text-center">
+        <div class="card-deck ">
+          <div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Coordonnées</div>
+            <div class="card-body text-dark">
+              <h5 class="card-title">Adresse</h5>
+              <p class="card-text"><%=@etablissement.address%></p>
+              <h5 class="card-title">E-mail</h5>
+              <p class="card-text"><%=@etablissement.address%></p>
+              <h5 class="card-title">Téléphone</h5>
+              <p class="card-text"><%=@etablissement.address%></p>
+            </div>
+          </div>
+          <% adherents = Adherent.where(etablissement_id: @etablissement.id)%>
+          <div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Adhérents dans l'établissement</div>
+            <div class="card-body text-dark">
+              <% adherents.each do |a|%>
+                <h5 class="card-title">Dr <%=a.nom.upcase%> <%=a.prenom.capitalize%></h5>
+                <a href="<%=adherent_path(a)%>" class="btn btn-secondary btn-sm">Voir la fiche</a>
+              <%end%>
+            </div>
+          </div>
+          <div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Personnel dans l'établissement</div>
+            <div class="card-body text-dark">
+              <h5 class="card-title">Dark card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+          <div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">Localisation</div>
+            <div class="card-body text-dark">
+              <img src="https://maps.googleapis.com/maps/api/staticmap?center=<%=@etablissement.latitude%>,<%=@etablissement.longitude%>&zoom=14&size=250x250&key=<%=ENV['GOOGLE_API_KEY']%>">
+            </div>
+          </div>
+          <div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">StreetView</div>
+            <div class="card-body text-dark">
+              <img src="https://maps.googleapis.com/maps/api/streetview?size=250x250&location=<%=@etablissement.latitude%>,<%=@etablissement.longitude%>&fov=80&heading=70&pitch=0&key=<%=ENV['GOOGLE_API_KEY']%>" alt="...">
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn btn-primary" style="margin: 10px;">Voir l'établissement</a>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade " id="pills-civil" role="tabpanel" aria-labelledby="pills-civil-tab" style="margin: 40px;">
+
+    <container >
+
+
+  <%= simple_form_for @etablissement do |f| %>
+  <form >
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <%= f.input :nom, type: "Nom", class: "form-control", placeholder: "Nom"%>
+    </div>
+
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.input :rue, type: "Rue", class: "form-control", placeholder: "Rue", label:"Numéro et rue (ne rien mettre d'autres, utiliser pour cela le complément d'adresse)"%>
+    </div>
+    <div class="form-group col-md-3">
+      <%= f.input :codepostal, type: "Codepostal", class: "form-control", placeholder: "Code postal"%>
+    </div>
+    <div class="form-group col-md-3">
+      <%= f.input :ville, type: "Ville", class: "form-control", placeholder: "Ville"%>
+    </div>
+  </div>
+  <div class="form-row">
+
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <%= f.input :departement, type: "Departement", class: "form-control", placeholder: "Département", collection: ["Nord", "Pas de Calais", "Somme", "Aisne", "Oise"]%>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.input :siret, type: "Siret", class: "form-control", placeholder: "Siret"%>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.input :typeeta, type: "Numsecu", class: "form-control",label:"Type d'établissment", placeholder: "Type d'établissement"%>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Modifier</button>
+</form>
+<%end%>
+</container>
+
+
+  </div>
+
+  <div class="tab-pane fade " id="pills-cotisation" role="tabpanel" aria-labelledby="pills-cotisation-tab" style="margin: 40px;">
+
+  </div>
+
+  <div class="tab-pane fade " id="pills-contrat" role="tabpanel" aria-labelledby="pills-contrat-tab" style="margin: 40px;">
+
+  </div>
+
+  <div class="tab-pane fade " id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" style="margin: 40px;">
+
+  </div>
+
+</div>
+
+<div class="card text-center" style="margin: 40px;">
+  <div class="card-header">
+    Vous voulez...
+  </div>
+  <div class="card-body">
+
+    <a href="<%= etablissements_path%>" class="btn btn-primary" style="margin: 10px;">Retourner à la liste des établissements</a>
+
+    <a href="#" class="btn btn-danger" style="margin: 10px;">Supprimer l'établissement</a>
+    <a href="#" class="btn btn-primary" style="margin: 10px;">Retourner à l'accueil</a>
+
+
+  </div>
+
+</div>

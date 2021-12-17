@@ -1,0 +1,99 @@
+<container style="margin: 40px;">
+<div class="card bg-dark text-white" style="margin: 40px;">
+  <img src="../assets/home1.png" class="card-img" alt="...">
+  <div class="card-img-overlay">
+    <h3 class="card-title" style="text-align: center;">Liste des établissements</h3>
+
+  </div>
+</div>
+
+<div style="margin: 40px;">
+      <div id="map"
+        style="width: 100%; height: 600px;"
+        data-markers="<%= @markerseta.to_json %>"
+        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+    </div>
+
+
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin: 40px;">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" id="pills-tous-tab" data-toggle="pill" href="#pills-tous" role="tab" aria-controls="pills-tous" aria-selected="true">Tous</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-nord-tab" data-toggle="pill" href="#pills-nord" role="tab" aria-controls="pills-nord" aria-selected="false">Nord</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-pdc-tab" data-toggle="pill" href="#pills-pdc" role="tab" aria-controls="pills-pdc" aria-selected="false">Pas-de-Calais</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-somme-tab" data-toggle="pill" href="#pills-somme" role="tab" aria-controls="pills-somme" aria-selected="false">Somme</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-aisne-tab" data-toggle="pill" href="#pills-aisne" role="tab" aria-controls="pills-aisne" aria-selected="false">Aisne</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-oise-tab" data-toggle="pill" href="#pills-oise" role="tab" aria-controls="pills-oise" aria-selected="false">Oise</a>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+
+
+
+  <div class="tab-pane fade show active" id="pills-tous" role="tabpanel" aria-labelledby="pills-tous-tab">
+
+    <%= render 'shared/indexeta'%>
+
+  </div>
+
+
+  <div class="tab-pane fade" id="pills-nord" role="tabpanel" aria-labelledby="pills-nord-tab">
+
+      <% @etablissementstri = Etablissement.where(departement: "Nord")%>
+
+        <%= render 'shared/indexetatri'%>
+
+
+  </div>
+
+
+  <div class="tab-pane fade" id="pills-pdc" role="tabpanel" aria-labelledby="pills-pdc-tab">
+      <%@etablissementstri = Etablissement.where(departement: "Pas de Calais")%>
+      <%= render 'shared/indexetatri'%>
+
+
+  </div>
+
+
+  <div class="tab-pane fade" id="pills-somme" role="tabpanel" aria-labelledby="pills-somme-tab">
+    <%@etablissementstri = Etablissement.where(departement: "Somme")%>
+      <%= render 'shared/indexetatri'%>
+
+  </div>
+
+  <div class="tab-pane fade" id="pills-aisne" role="tabpanel" aria-labelledby="pills-aisne-tab">
+    <%@etablissementstri = Etablissement.where(departement: "Aisne")%>
+      <%= render 'shared/indexetatri'%>
+
+  </div>
+
+  <div class="tab-pane fade" id="pills-oise" role="tabpanel" aria-labelledby="pills-oise-tab">
+    <%@etablissementstri = Etablissement.where(departement: "Oise")%>
+      <%= render 'shared/indexetatri'%>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+  <div style="margin: 40px;">
+  <div id="map"
+       style="width: 100%; height: 600px;"
+       data-markers="<%= @markerseta.to_json %>"
+       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+  </div>
+</container>
