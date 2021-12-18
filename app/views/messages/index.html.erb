@@ -1,0 +1,49 @@
+<container style="margin: 40px;">
+<div class="card text-center" style="margin: 40px;">
+
+  <div class="card-body">
+    <h2 class="card-title">Gestion des messages</h2>
+
+  </div>
+
+</div>
+
+
+    <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Adresse</th>
+      <th scope="col">Email</th>
+      <th scope="col">Téléphone</th>
+      <th scope="col">Contenu</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <%i = 1%>
+    <%@messages.each do |a|%>
+
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <td><%=a.adresse%></td>
+      <td><%=a.email%></td>
+      <td><%=a.telephone%></td>
+      <td><%=a.content%></td>
+
+      <td>
+        <a class="fas fa-trash-alt" href="<%=effacer_message_path(messageid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce message ?')" title="Effacer"></a>
+      </td>
+
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+
+</container>

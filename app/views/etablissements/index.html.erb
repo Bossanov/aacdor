@@ -1,10 +1,15 @@
 <container style="margin: 40px;">
-<div class="card bg-dark text-white" style="margin: 40px;">
-  <img src="../assets/home1.png" class="card-img" alt="...">
-  <div class="card-img-overlay">
-    <h3 class="card-title" style="text-align: center;">Liste des établissements</h3>
+<div class="card text-center" style="margin: 40px;">
 
+  <div class="card-body">
+    <h2 class="card-title">Liste des établissements</h2>
+    <form style="margin: 40px;">
+      <input type="search" class="form-control" id="" placeholder="Rechercher un adhérent ou un établissement" style="margin: 10px;">
+      <button type="submit" class="btn btn-primary"  style="margin: 10px;">Chercher</button>
+    </form>
+    <a href="#" class="btn btn-danger">Nouvel adhérent</a>
   </div>
+
 </div>
 
 <div style="margin: 40px;">
@@ -49,7 +54,7 @@
 
   <div class="tab-pane fade" id="pills-nord" role="tabpanel" aria-labelledby="pills-nord-tab">
 
-      <% @etablissementstri = Etablissement.where(departement: "Nord")%>
+      <% @etablissementstri = Etablissement.where(departement: "Nord").order(:nom)%>
 
         <%= render 'shared/indexetatri'%>
 
@@ -58,7 +63,7 @@
 
 
   <div class="tab-pane fade" id="pills-pdc" role="tabpanel" aria-labelledby="pills-pdc-tab">
-      <%@etablissementstri = Etablissement.where(departement: "Pas de Calais")%>
+      <%@etablissementstri = Etablissement.where(departement: "Pas de Calais").order(:nom)%>
       <%= render 'shared/indexetatri'%>
 
 
@@ -66,19 +71,19 @@
 
 
   <div class="tab-pane fade" id="pills-somme" role="tabpanel" aria-labelledby="pills-somme-tab">
-    <%@etablissementstri = Etablissement.where(departement: "Somme")%>
+    <%@etablissementstri = Etablissement.where(departement: "Somme").order(:nom)%>
       <%= render 'shared/indexetatri'%>
 
   </div>
 
   <div class="tab-pane fade" id="pills-aisne" role="tabpanel" aria-labelledby="pills-aisne-tab">
-    <%@etablissementstri = Etablissement.where(departement: "Aisne")%>
+    <%@etablissementstri = Etablissement.where(departement: "Aisne").order(:nom)%>
       <%= render 'shared/indexetatri'%>
 
   </div>
 
   <div class="tab-pane fade" id="pills-oise" role="tabpanel" aria-labelledby="pills-oise-tab">
-    <%@etablissementstri = Etablissement.where(departement: "Oise")%>
+    <%@etablissementstri = Etablissement.where(departement: "Oise").order(:nom)%>
       <%= render 'shared/indexetatri'%>
 
   </div>
