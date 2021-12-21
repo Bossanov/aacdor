@@ -9,7 +9,7 @@
         <h3 class="card-title">Dr <%=@adherent.prenom.capitalize%> <%=@adherent.nom.upcase%></h3>
         <p class="card-text">Adresse : <%=@adherent.address%></p>
         <p class="card-text">Téléphone : <%=@adherent.telephone%></p>
-        <p class="card-text">PCR attitré : </p>
+        <p class="card-text">PCR attitré : Dr <%=@adherent.pcr%></p>
       </div>
     </div>
   </div>
@@ -49,11 +49,17 @@
         data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
       </div>
     </div>
-  </div>
   <%end%>
+  </div>
 
   <div class="tab-pane fade " id="pills-etablissement" role="tabpanel" aria-labelledby="pills-etablissement-tab">
     <% @etablissement = Etablissement.find_by_id(@adherent.etablissement_id)%>
+
+    <% if @etablissement.nil?%>
+      <H1 style="color: red;">Attention adhérent non associé à un établissement</H1>
+      <a href="<%=edit_adherent_path(@adherent)%>" class="btn btn-primary" style="margin: 10px;">Associer</a>
+    <%else%>
+
     <div class="card text-center" style="margin: 40px;">
       <div class="card-header">
         <h2>Etablissement <%=@etablissement.nom%></h2>
@@ -104,7 +110,10 @@
         <a href="<%=etablissement_path(@etablissement)%>" class="btn btn-primary" style="margin: 10px;">Voir l'établissement</a>
       </div>
     </div>
+    <%end%>
   </div>
+
+
   <div class="tab-pane fade " id="pills-civil" role="tabpanel" aria-labelledby="pills-civil-tab" style="margin: 40px;">
 
     <container >
@@ -129,6 +138,11 @@
     </div>
     <div class="form-group col-md-6">
       <%= f.input :telephone, type: "Telephone", class: "form-control", placeholder: "Téléphone"%>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <%= f.input :email, type: "Email", class: "form-control", placeholder: "Email"%>
     </div>
   </div>
   <div class="form-row">
@@ -170,7 +184,26 @@
       <%= f.input :respactnucleaire, type: "RAN", class: "form-control", placeholder: "Responsable Activité Nucléaire", label:"Responsable Activité Nucléaire", collection: ["oui", "non"]%>
     </div>
   </div>
+  <div class="form-row">
+    <% @etablissements = Etablissement.all.order(:nom)%>
+    <% @pcrs = Pcr.all.order(:nom)%>
+    <% etablissementsarray = []%>
+    <% pcrsarray = []%>
+    <% @etablissements.each do |e|%>
+      <% etablissementsarray << e.nom%>
+    <%end%>
+    <% @pcrs.each do |e|%>
+      <% pcrsarray << e.prenom.capitalize + " " + e.nom.upcase%>
+    <%end%>
+    <div class="form-group col-md-6">
+      <%= f.input :etablissement, type: "etablissement", class: "form-control", placeholder: "Etablissement associé", label:"Etablissement associé", collection: etablissementsarray%>
+    </div>
+    <div class="form-group col-md-6">
+      <%= f.input :pcr, type: "pcr", class: "form-control", placeholder: "RCP associé", label:"RCP Associé", collection: pcrsarray%>
+    </div>
+  </div>
   <button type="submit" class="btn btn-primary">Modifier</button>
+  <a href="<%=adherents_path%>" class="btn btn-primary">Retour</a>
 </form>
 <%end%>
 </container>

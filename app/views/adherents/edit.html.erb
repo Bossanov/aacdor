@@ -23,6 +23,11 @@
     </div>
   </div>
   <div class="form-row">
+    <div class="form-group col-md-12">
+      <%= f.input :email, type: "Email", class: "form-control", placeholder: "Email"%>
+    </div>
+  </div>
+  <div class="form-row">
     <div class="form-group col-md-6">
       <%= f.input :rue, type: "Rue", class: "form-control", placeholder: "Rue", label:"Numéro et rue (ne rien mettre d'autres, utiliser pour cela le complément d'adresse)"%>
     </div>
@@ -59,6 +64,24 @@
     </div>
     <div class="form-group col-md-4">
       <%= f.input :respactnucleaire, type: "RAN", class: "form-control", placeholder: "Responsable Activité Nucléaire", label:"Responsable Activité Nucléaire", collection: ["oui", "non"]%>
+    </div>
+  </div>
+  <div class="form-row">
+    <% @etablissements = Etablissement.all.order(:nom)%>
+    <% @pcrs = Pcr.all.order(:nom)%>
+    <% etablissementsarray = []%>
+    <% pcrsarray = []%>
+    <% @etablissements.each do |e|%>
+      <% etablissementsarray << e.nom%>
+    <%end%>
+    <% @pcrs.each do |e|%>
+      <% pcrsarray << e.prenom.capitalize + " " + e.nom.upcase%>
+    <%end%>
+    <div class="form-group col-md-6">
+      <%= f.input :etablissement, type: "etablissement", class: "form-control", placeholder: "Etablissement associée", label:"Etablissement associé", collection: etablissementsarray%>
+    </div>
+    <div class="form-group col-md-6">
+      <%= f.input :pcr, type: "pcr", class: "form-control", placeholder: "RCP associé", label:"RCP Associé", collection: pcrsarray%>
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Modifier</button>

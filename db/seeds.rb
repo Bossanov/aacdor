@@ -1,6 +1,30 @@
 User.destroy_all
 Adherent.destroy_all
 Etablissement.destroy_all
+Pcr.destroy_all
+
+
+puts "Création du CRP"
+userpcr = User.create!(
+        email: "staumont.michel@icloud.com",
+        password: "Bossanova1",
+        statut: "pcr"
+      )
+userpcr.save
+pcr = Pcr.create!(
+        nom: "STAUMONT",
+        prenom: "Michel",
+        rue: "25 rue du cateau",
+        codepostal: "59550",
+        ville: "Fontaine au bois",
+        departement: "Nord",
+        telephone: "0661526441",
+        email: userpcr.email,
+        user_id: userpcr.id
+      )
+pcr.save
+
+
 xls_file = Roo::Excelx.new('db/adherent.xlsx')
 s = Roo::CSV.new("db/adherent.csv")
 xls_file.to_csv("db/adherent.csv")
@@ -103,7 +127,7 @@ CSV.foreach("db/adherent.csv") do |row|
       end
     end
     user.save
-    puts "3 création profile"
+    puts "3 création Adhérent"
     et = Etablissement.where(nom: row[1])
     if row[4].nil? || row[5].nil? || row[6].nil?
       if row[7].nil?
@@ -125,7 +149,9 @@ CSV.foreach("db/adherent.csv") do |row|
           respactnucleaire: "NC",
           address: "",
           user_id: user.id,
-          etablissement_id: et.last.id
+          etablissement_id: et.last.id,
+          pcr: "Michel STAUMONT",
+          email: user.email
         )
       else
         prof = Adherent.create!(
@@ -146,7 +172,9 @@ CSV.foreach("db/adherent.csv") do |row|
           respactnucleaire: "NC",
           address: "",
           user_id: user.id,
-          etablissement_id: et.last.id
+          etablissement_id: et.last.id,
+          pcr: "Michel STAUMONT",
+          email: user.email
         )
       end
     else
@@ -189,7 +217,9 @@ CSV.foreach("db/adherent.csv") do |row|
           respactnucleaire: "NC",
           address: row[4] + " " + row[5] + " " + row[6],
           user_id: user.id,
-          etablissement_id: et.last.id
+          etablissement_id: et.last.id,
+          pcr: "Michel STAUMONT",
+          email: user.email
         )
       else
         prof = Adherent.create!(
@@ -210,7 +240,9 @@ CSV.foreach("db/adherent.csv") do |row|
           respactnucleaire: "NC",
           address: row[4] + " " + row[5] + " " + row[6],
           user_id: user.id,
-          etablissement_id: et.last.id
+          etablissement_id: et.last.id,
+          pcr: "Michel STAUMONT",
+          email: user.email
         )
       end
     end

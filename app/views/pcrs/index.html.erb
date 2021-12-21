@@ -1,0 +1,53 @@
+<container style="margin: 40px;">
+
+
+<div class="card text-center" style="margin: 40px;">
+
+  <div class="card-body">
+    <h2 class="card-title">Liste des RCP</h2>
+
+    <a href="<%=new_pcr_path%>" class="btn btn-danger">Nouveau RCP</a>
+  </div>
+
+</div>
+
+ <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Rue</th>
+      <th scope="col">Code postal</th>
+      <th scope="col">Ville</th>
+      <th scope="col">Téléphone</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <%i = 1%>
+    <%@pcrs.each do |a|%>
+
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <td><%=a.rue%></td>
+      <td><%=a.codepostal%></td>
+      <td><%=a.telephone%></td>
+      <td><%=a.ville%></td>
+
+      <td>
+        <a class="fas fa-pen" href="<%=edit_pcr_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=pcr_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_pcr_path(pcrid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce RCP ?')" title="Effacer"></a>
+
+      </td>
+
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+</container>

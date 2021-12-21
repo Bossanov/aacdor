@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_18_143815) do
+ActiveRecord::Schema.define(version: 2021_12_20_140209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,9 @@ ActiveRecord::Schema.define(version: 2021_12_18_143815) do
     t.string "address"
     t.string "detailadresse"
     t.bigint "etablissement_id"
+    t.string "email"
+    t.string "pcr"
+    t.string "etablissement"
     t.index ["etablissement_id"], name: "index_adherents_on_etablissement_id"
     t.index ["user_id"], name: "index_adherents_on_user_id"
   end
@@ -68,6 +71,23 @@ ActiveRecord::Schema.define(version: 2021_12_18_143815) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "pcrs", force: :cascade do |t|
+    t.string "nom", null: false
+    t.string "prenom", null: false
+    t.string "rue", null: false
+    t.string "codepostal", null: false
+    t.string "ville", null: false
+    t.string "departement", null: false
+    t.string "telephone", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.bigint "etablissement_id"
+    t.string "email"
+    t.index ["etablissement_id"], name: "index_pcrs_on_etablissement_id"
+    t.index ["user_id"], name: "index_pcrs_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -83,4 +103,6 @@ ActiveRecord::Schema.define(version: 2021_12_18_143815) do
 
   add_foreign_key "adherents", "etablissements"
   add_foreign_key "adherents", "users"
+  add_foreign_key "pcrs", "etablissements"
+  add_foreign_key "pcrs", "users"
 end

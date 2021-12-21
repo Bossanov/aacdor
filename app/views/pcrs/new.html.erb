@@ -1,0 +1,49 @@
+<container style="margin: 40px;">
+  <h1>Ajouter un nouveau RCP</h1>
+
+  <%= simple_form_for @pcr do |f| %>
+  <form >
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <%= f.input :nom, type: "Nom", class: "form-control", placeholder: "Nom"%>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.input :prenom, type: "Prenom", class: "form-control", placeholder: "Prenom"%>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.input :telephone, type: "Telephone", class: "form-control", placeholder: "Téléphone"%>
+    </div>
+
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-8">
+      <%= f.input :rue, type: "Rue", class: "form-control", placeholder: "Rue", label:"Numéro et rue"%>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.input :departement, type: "Departement", class: "form-control", placeholder: "Département", collection: ["Nord", "Pas de Calais", "Somme", "Aisne", "Oise"]%>
+    </div>
+
+
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.input :codepostal, type: "Codepostal", class: "form-control", placeholder: "Code postal"%>
+    </div>
+    <div class="form-group col-md-6">
+      <%= f.input :ville, type: "Ville", class: "form-control", placeholder: "Ville"%>
+    </div>
+
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <%= f.input :email, type: "Email", class: "form-control", placeholder: "Email"%>
+
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Ajouter</button>
+  <a href="<%=adherents_path%>" class="btn btn-danger">Retour</a>
+</form>
+<%end%>
+</container>
