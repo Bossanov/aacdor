@@ -70,7 +70,7 @@ class EtablissementsController < ApplicationController
   private
 
   def etablissement_params
-    params.require(:etablissement).permit(:rue, :codepostal, :ville, :departement, :nom, :address, :typeeta, :siret)
+    params.require(:etablissement).permit(:rue, :codepostal, :ville, :departement, :nom, :address, :typeeta, :siret, :pcreta, :telephone, :email)
   end
 
 end

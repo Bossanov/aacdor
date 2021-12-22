@@ -1,0 +1,57 @@
+<div class="card text-center" style="margin: 40px;">
+
+  <div class="card-body">
+    <h2 class="card-title">Résultat de la recherche</h2>
+
+
+    <form style="margin: 40px;" action="<%=search_path%>" target="_blank" type="get">
+      <input type="text" class="form-control" id="title" name="title" placeholder="Rechercher un adhérent ou un établissement" style="margin: 10px;">
+      <button type="submit" class="btn btn-primary"  style="margin: 10px;">Chercher</button>
+    </form>
+  </div>
+  <div class="card-footer text-muted">
+    Aujourd'hui nous sommes le <%= Time.now.strftime("%d/%m/%Y") %>
+  </div>
+</div>
+
+<% if @results.any? %>
+
+
+  <div class="card text-center" style="margin: 40px;">
+
+  <div class="card-body">
+    <h3 class="card-title">Nombre de résultats (<%= @total_results %>):</h3>
+
+  </div>
+
+</div>
+
+
+
+  <div class="row row-cols-1 row-cols-md-3" style="margin: 40px;">
+  <% @results.each do |adherent| %>
+  <div class="col mb-4">
+  <div class="card">
+    <img src="https://maps.googleapis.com/maps/api/streetview?size=300x300&location=<%=adherent.latitude%>,<%=adherent.longitude%>&fov=80&heading=70&pitch=0&key=<%=ENV['GOOGLE_API_KEY']%>" class="card-img-top" alt="...">
+    <div class="card-body ">
+      <h5 class="card-title">Dr <%=adherent.prenom.capitalize%> <%=adherent.nom.upcase%></h5>
+      <p class="card-text"><%=adherent.address%></p>
+      <p class="card-text">RCP : <%=adherent.pcr%></p>
+
+      <a href="<%=adherent_path(adherent)%>" class="btn btn-secondary btn-sm" role="button" aria-pressed="true" style="margin: 10px;">Voir l'adhérent</a>
+      <a href="<%=etablissement_path(adherent.etablissement_id)%>" class="btn btn-secondary btn-sm" role="button" aria-pressed="true" style="margin: 10px;">Voir l'établissement</a>
+
+    </div>
+  </div>
+</div>
+  <% end %>
+</div>
+<% else %>
+  Results not found :(
+<% end %>
+
+
+
+
+
+

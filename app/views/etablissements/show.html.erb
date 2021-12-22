@@ -8,8 +8,8 @@
       <div class="card-body">
         <h3 class="card-title">Etablissement <%=@etablissement.nom.upcase%></h3>
         <p class="card-text">Adresse : <%=@etablissement.address%></p>
-        <p class="card-text">Téléphone : </p>
-        <p class="card-text">PCR attitré : </p>
+        <p class="card-text">Téléphone : <%=@etablissement.telephone%></p>
+        <p class="card-text">PCR attitré : <%=@etablissement.pcreta%></p>
       </div>
     </div>
   </div>
@@ -66,9 +66,9 @@
               <h5 class="card-title">Adresse</h5>
               <p class="card-text"><%=@etablissement.address%></p>
               <h5 class="card-title">E-mail</h5>
-              <p class="card-text"><%=@etablissement.address%></p>
+              <p class="card-text"><%=@etablissement.email%></p>
               <h5 class="card-title">Téléphone</h5>
-              <p class="card-text"><%=@etablissement.address%></p>
+              <p class="card-text"><%=@etablissement.telephone%></p>
             </div>
           </div>
           <% adherents = Adherent.where(etablissement_id: @etablissement.id)%>
@@ -141,9 +141,27 @@
       <%= f.input :siret, type: "Siret", class: "form-control", placeholder: "Siret"%>
     </div>
     <div class="form-group col-md-4">
-      <%= f.input :typeeta, type: "Numsecu", class: "form-control",label:"Type d'établissment", placeholder: "Type d'établissement"%>
+      <%= f.input :typeeta, type: "typeeta", class: "form-control",label:"Type d'établissment", placeholder: "Type d'établissement"%>
     </div>
   </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <%= f.input :email, type: "email", class: "form-control", placeholder: "Email"%>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.input :telephone, type: "telephone", class: "form-control", placeholder: "Téléphone"%>
+    </div>
+    <% pcr = []%>
+    <% @pcrs = Pcr.all%>
+    <% @pcrs.each do |a|%>
+    <% pcr << a.prenom.capitalize + " " + a.nom.upcase%>
+    <%end%>
+    <div class="form-group col-md-4">
+      <%= f.input :pcreta, type: "pcr", class: "form-control",label:"RCP désigné", placeholder: "RCP désigné", collection: pcr%>
+    </div>
+  </div>
+
 
   <button type="submit" class="btn btn-primary">Modifier</button>
 </form>

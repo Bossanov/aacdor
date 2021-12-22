@@ -8,14 +8,14 @@
 
 <container>
 
-<div class="card text-center">
+<div class="card text-center" style="margin: 40px;">
 
   <div class="card-body">
     <h5 class="card-title">Espace RCP du Dr <%=@pcr.last.prenom.capitalize%> <%=@pcr.last.nom.upcase%></h5>
     <p class="card-text">Retrouvez ici l'essentiel de vos informations et outils</p>
     <a href="#" class="btn btn-primary">Débuter un contrôle</a>
-    <form style="margin: 40px;">
-      <input type="search" class="form-control" id="" placeholder="Rechercher un adhérent ou un établissement" style="margin: 10px;">
+    <form style="margin: 40px;" action="<%=search_path%>" target="_blank" type="get">
+      <input type="text" class="form-control" id="title" name="title" placeholder="Rechercher un adhérent ou un établissement" style="margin: 10px;">
       <button type="submit" class="btn btn-primary"  style="margin: 10px;">Chercher</button>
     </form>
   </div>
@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin: 40px;">
   <li class="nav-item" role="presentation">
     <a class="nav-link active" id="pills-carte-tab" data-toggle="pill" href="#pills-carte" role="tab" aria-controls="pills-carte" aria-selected="true">Ma carte</a>
   </li>
