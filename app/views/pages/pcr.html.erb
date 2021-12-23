@@ -14,10 +14,7 @@
     <h5 class="card-title">Espace RCP du Dr <%=@pcr.last.prenom.capitalize%> <%=@pcr.last.nom.upcase%></h5>
     <p class="card-text">Retrouvez ici l'essentiel de vos informations et outils</p>
     <a href="#" class="btn btn-primary">Débuter un contrôle</a>
-    <form style="margin: 40px;" action="<%=search_path%>" target="_blank" type="get">
-      <input type="text" class="form-control" id="title" name="title" placeholder="Rechercher un adhérent ou un établissement" style="margin: 10px;">
-      <button type="submit" class="btn btn-primary"  style="margin: 10px;">Chercher</button>
-    </form>
+
     <%= form_with(url: "/search", method: "post", class: 'form-inline my-2 my-lg-0', local: true) do %>
     <%= text_field_tag(:q, nil, class: "form-control mr-sm-2", placeholder: "Search") %>
     <%= button_tag("Search", class: "btn btn-outline-info my-2 my-sm-0", name: nil) %>
