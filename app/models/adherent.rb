@@ -9,5 +9,5 @@ class Adherent < ApplicationRecord
   include Elasticsearch::Model::Callbacks
   settings index: { number_of_shards: 1 }
 
-  Adherent.import
+
 end
