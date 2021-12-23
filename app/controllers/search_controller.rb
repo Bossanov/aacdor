@@ -1,9 +1,6 @@
 class SearchController < ApplicationController
-  def search
-    query = AdherentIndex.search(params[:title].to_s)
-
-    @results = query.records
-    @total_results = query.total_entries
+  def run
+    @results = Elasticsearch::Model.search(params[:q]).records
 
   end
 end

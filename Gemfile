@@ -60,5 +60,8 @@ gem "font-awesome-rails"
 gem 'geocoder'
 gem 'dotenv-rails', groups: [:development, :test]
 gem "roo", "~> 2.8.0"
-gem 'search_flip'
+#gem 'search_flip'
+gem 'elasticsearch-model', "7.1.1"
+gem 'elasticsearch-rails', "7.1.1"
+gem 'bonsai-elasticsearch-rails'
 
