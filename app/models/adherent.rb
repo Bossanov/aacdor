@@ -1,13 +1,11 @@
-require 'elasticsearch/model'
+
 class Adherent < ApplicationRecord
   belongs_to :user
   geocoded_by :address
   after_validation :geocode, if: :will_save_change_to_address?
   has_many :etablissements
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  settings index: { number_of_shards: 1 }
+
 
 
 end

@@ -13,6 +13,6 @@ Rails.application.routes.draw do
   get 'pages/admin'
   get 'pages/client'
   get 'pages/pcr'
-  post '/search', to: 'search#run'
+  get '/search', to: 'search#result'
 
 end

@@ -68,7 +68,10 @@ class AdherentsController < ApplicationController
   end
 
   def index
+
+
     @adherents = Adherent.all.order(:nom)
+
     @markers = @adherents.geocoded.map do |adh|
       {
         lat: adh.latitude,

@@ -4,23 +4,23 @@
     <h2 class="card-title">Résultat de la recherche</h2>
 
 
-    <form style="margin: 40px;" action="<%=search_path%>" target="_blank" type="get">
-      <input type="text" class="form-control" id="title" name="title" placeholder="Rechercher un adhérent ou un établissement" style="margin: 10px;">
-      <button type="submit" class="btn btn-primary"  style="margin: 10px;">Chercher</button>
-    </form>
+      <%= form_tag search_path, method: :get do %>
+  <%= text_field_tag :"q[nom_or_ville_or_prenom_cont]" %>
+  <%= submit_tag "Search", data: { disable_with: "Searching..." }%>
+<% end %>
   </div>
   <div class="card-footer text-muted">
     Aujourd'hui nous sommes le <%= Time.now.strftime("%d/%m/%Y") %>
   </div>
 </div>
 
-<% if @results.any? %>
+<% if @items.any? %>
 
 
   <div class="card text-center" style="margin: 40px;">
 
   <div class="card-body">
-    <h3 class="card-title">Nombre de résultats (<%= @total_results %>):</h3>
+    <h3 class="card-title">Nombre de résultats (<%= @items.length %>):</h3>
 
   </div>
 
@@ -29,7 +29,7 @@
 
 
   <div class="row row-cols-1 row-cols-md-3" style="margin: 40px;">
-  <% @results.each do |adherent| %>
+  <% @items.each do |adherent| %>
   <div class="col mb-4">
   <div class="card">
     <img src="https://maps.googleapis.com/maps/api/streetview?size=300x300&location=<%=adherent.latitude%>,<%=adherent.longitude%>&fov=80&heading=70&pitch=0&key=<%=ENV['GOOGLE_API_KEY']%>" class="card-img-top" alt="...">

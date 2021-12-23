@@ -15,10 +15,12 @@
     <p class="card-text">Retrouvez ici l'essentiel de vos informations et outils</p>
     <a href="#" class="btn btn-primary">Débuter un contrôle</a>
 
-    <%= form_with(url: "/search", method: "post", class: 'form-inline my-2 my-lg-0', local: true) do %>
-    <%= text_field_tag(:q, nil, class: "form-control mr-sm-2", placeholder: "Search") %>
-    <%= button_tag("Search", class: "btn btn-outline-info my-2 my-sm-0", name: nil) %>
-    <% end %>
+
+
+    <%= form_tag search_path, method: :get do %>
+  <%= text_field_tag :"q[nom_or_ville_or_prenom_cont]" %>
+  <%= submit_tag "Search", data: { disable_with: "Searching..." }%>
+<% end %>
   </div>
   <div class="card-footer text-muted">
     Aujourd'hui nous sommes le <%= Time.now.strftime("%d/%m/%Y") %>

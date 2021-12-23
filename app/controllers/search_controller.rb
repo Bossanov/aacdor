@@ -1,6 +1,9 @@
 class SearchController < ApplicationController
-  def run
-    @results = Elasticsearch::Model.search(params[:q]).records
 
+def result
+    @q = Adherent.ransack(params[:q])
+    @items = @q.result
   end
+
+
 end
