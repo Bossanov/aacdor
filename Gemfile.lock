@@ -98,11 +98,11 @@ GEM
       elasticsearch-transport (= 7.16.1)
     elasticsearch-api (7.16.1)
       multi_json
-    elasticsearch-model (7.1.1)
+    elasticsearch-model (7.1.0)
       activesupport (> 3)
       elasticsearch (> 1)
       hashie
-    elasticsearch-rails (7.1.1)
+    elasticsearch-rails (7.1.0)
     elasticsearch-transport (7.16.1)
       faraday (~> 1)
       multi_json
@@ -275,8 +275,8 @@ DEPENDENCIES
   capybara (>= 3.26)
   devise
   dotenv-rails
-  elasticsearch-model (= 7.1.1)
-  elasticsearch-rails (= 7.1.1)
+  elasticsearch-model (= 7.1.0)
+  elasticsearch-rails (= 7.1.0)
   font-awesome-rails
   geocoder
   listen (~> 3.3)
