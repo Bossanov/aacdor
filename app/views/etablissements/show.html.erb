@@ -10,7 +10,12 @@
         <p class="card-text">Adresse : <%=@etablissement.address%></p>
         <p class="card-text">Téléphone : <%=@etablissement.telephone%></p>
         <% pcr = Pcr.where(id: @etablissement.pcr_id)%>
+        <% if pcr.last.nil?%>
+        <p class="card-text">Pas de PCR attitré </p>
+
+        <%else%>
         <p class="card-text">PCR attitré : <%=pcr.last.prenom.capitalize%> <%=pcr.last.nom.upcase%> </p>
+        <%end%>
       </div>
     </div>
   </div>
@@ -237,7 +242,7 @@
   <div class="card-header bg-transparent border-success">Matériel #<%=i%></div>
   <div class="card-body text-success">
     <h5 class="card-title"><%=a.marque.upcase%> <%=a.modele%></h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <p class="card-text">Emplacement : <%=a.empla%></p>
   </div>
   <div class="card-footer bg-transparent border-success"><a href="" class="btn btn-secondary btn-sm">Voir la fiche</a></div>
 </div>
