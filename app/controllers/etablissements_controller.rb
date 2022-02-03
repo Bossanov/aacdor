@@ -5,8 +5,7 @@ class EtablissementsController < ApplicationController
   end
   def create
     @etablissement = Etablissement.new(etablissement_params)
-    num = Etablissement.all.count + 1
-    @etablissement.id = num
+
     if @etablissement.save
       flash[:notice] = "L'établissement a été créé."
       redirect_to root_path
@@ -70,7 +69,7 @@ class EtablissementsController < ApplicationController
   private
 
   def etablissement_params
-    params.require(:etablissement).permit(:rue, :codepostal, :ville, :departement, :nom, :address, :typeeta, :siret, :pcreta, :telephone, :email)
+    params.require(:etablissement).permit(:rue, :codepostal, :ville, :departement, :nom, :address, :typeeta, :siret, :pcr_id, :telephone, :email, :statut, :complementrue, :medecin_id)
   end
 
 end

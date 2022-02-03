@@ -1,0 +1,28 @@
+<container style="margin: 40px;">
+  <h1>Ajouter un nouveau générateur</h1>
+
+  <%= simple_form_for @generateurbase do |f| %>
+  <form >
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <%= f.input :marque, type: "Marque", class: "form-control", placeholder: "Marque"%>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <%= f.input :modele, type: "Modele", class: "form-control", placeholder: "Modèle"%>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <%= f.input :typegen, type: "Type", collection: ["retro alvéolaire", "panoramique 2D", "panoramique 3D", "pano céphalo 2D", "pano céphalo 3D", "mobile", "NC" ],class: "form-control", placeholder: "Type"%>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Ajouter</button>
+  <a href="<%=generateurbases_path%>" class="btn btn-danger">Retour</a>
+</form>
+<%end%>
+</container>

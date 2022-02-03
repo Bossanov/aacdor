@@ -1,0 +1,29 @@
+<div class="card text-center" style="margin: 40px;">
+  <div class="card-header">
+    <h1>Dr <%=@medecin.last.prenom.capitalize%> <%=@medecin.last.nom.upcase%></h1>
+  </div>
+  <div class="card-body">
+
+    <p class="card-text fas fa-map-marker-alt">     <%=@medecin.last.nometa%>, <%=@medecin.last.rue%> <%=@medecin.last.codepostal%> <%=@medecin.last.ville%></p>
+    <br>
+
+    <p class="card-text fas fa-phone-alt">     <%=@medecin.last.telephone%></p>
+    <br>
+    <p class="card-text fas fa-at">     <%=@medecin.last.email%></p>
+    <br>
+    <p class="card-text "><p style="color: blue;">Numéro RPPS:</p><%=@medecin.last.rpps%></p>
+
+    <p class="card-text "><p style="color: blue;">Numéro SIRET:</p><%=@medecin.last.siret%></p>
+
+    <p class="card-text "><p style="color: blue;">Numéro SISERI:</p><%=@medecin.last.siseri%></p>
+
+
+    <br>
+    <a href="<%=edit_medecin_path(@medecin.last.id)%>" class="btn btn-primary">Modifier</a>
+    <a href="<%=medecins_path%>" class="btn btn-danger">Retour</a>
+
+  </div>
+  <div class="card-footer text-muted">
+    Nombre d'établissements attitrés :
+  </div>
+</div>

@@ -1,0 +1,461 @@
+<container style="margin: 40px;">
+<div class="card text-center" style="margin: 40px;">
+
+  <div class="card-body">
+    <h2 class="card-title">Liste du personnel (<%=Personnel.all.length%>)</h2>
+    <form style="margin: 40px;">
+      <input type="search" class="form-control" id="" placeholder="Rechercher un personnel" style="margin: 10px;">
+      <button type="submit" class="btn btn-primary"  style="margin: 10px;">Chercher</button>
+    </form>
+    <a href="<%=new_personnel_path%>" class="btn btn-danger">Nouveau personnel</a>
+  </div>
+
+</div>
+
+
+
+
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin: 40px;">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" id="pills-tous-tab" data-toggle="pill" href="#pills-tous" role="tab" aria-controls="pills-tous" aria-selected="true">Tous</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-aidedentaire-tab" data-toggle="pill" href="#pills-aidedentaire" role="tab" aria-controls="pills-aidedentaire" aria-selected="false">Aide Dentaire</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-assistante-tab" data-toggle="pill" href="#pills-assistante" role="tab" aria-controls="pills-assistante" aria-selected="false">Assistante Dentaire</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-dentiste-tab" data-toggle="pill" href="#pills-dentiste" role="tab" aria-controls="pills-dentiste" aria-selected="false">Chirurgien-Dentiste</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-etudiant-tab" data-toggle="pill" href="#pills-etudiant" role="tab" aria-controls="pills-etudiant" aria-selected="false">Etudiant 6è Année</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-manager-tab" data-toggle="pill" href="#pills-manager" role="tab" aria-controls="pills-manager" aria-selected="false">Office Manager</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-prothesiste-tab" data-toggle="pill" href="#pills-prothesiste" role="tab" aria-controls="pills-prothesiste" aria-selected="false">Prothésiste</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-secretaire-tab" data-toggle="pill" href="#pills-secretaire" role="tab" aria-controls="pills-secretaire" aria-selected="false">Secrétaire</a>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+
+<%# -------------------------------------------------------------------------------------------------------%>
+
+
+  <div class="tab-pane fade show active" id="pills-tous" role="tabpanel" aria-labelledby="pills-tous-tab">
+
+    <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Etablissement</th>
+
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%i = 1%>
+    <%@personnels.each do |a|%>
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <% eta = Etablissement.where(id: a.etablissement_id)%>
+      <% if eta.last.nil?%>
+      <td style="color: red;">Pas d'établissement attitré</td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%else%>
+      <td><%=eta.last.nom%> <%=eta.last.address%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%end%>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+
+  </div>
+
+
+<%# -------------------------------------------------------------------------------------------------------%>
+
+  <div class="tab-pane fade" id="pills-aidedentaire" role="tabpanel" aria-labelledby="pills-aidedentaire-tab">
+
+
+
+
+    <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Etablissement</th>
+
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pers = Personnel.where(emploi: "Aide Dentaire")%>
+    <%i = 1%>
+    <%@pers.each do |a|%>
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <% eta = Etablissement.where(id: a.etablissement_id)%>
+      <% if eta.last.nil?%>
+      <td style="color: red;">Pas d'établissement attitré</td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%else%>
+      <td><%=eta.last.nom%> <%=eta.last.address%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%end%>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+
+
+
+
+  </div>
+
+<%# -------------------------------------------------------------------------------------------------------%>
+
+
+  <div class="tab-pane fade" id="pills-assistante" role="tabpanel" aria-labelledby="pills-assistante-tab">
+
+     <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Etablissement</th>
+
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pers = Personnel.where(emploi: "Assistante Dentaire")%>
+    <%i = 1%>
+    <%@pers.each do |a|%>
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <% eta = Etablissement.where(id: a.etablissement_id)%>
+      <% if eta.last.nil?%>
+      <td style="color: red;">Pas d'établissement attitré</td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%else%>
+      <td><%=eta.last.nom%> <%=eta.last.address%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%end%>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+
+
+
+
+  </div>
+
+<%# -------------------------------------------------------------------------------------------------------%>
+
+
+  <div class="tab-pane fade" id="pills-dentiste" role="tabpanel" aria-labelledby="pills-dentiste-tab">
+
+     <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Etablissement</th>
+
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pers = Personnel.where(emploi: "Chirurgien-Dentiste")%>
+    <%i = 1%>
+    <%@pers.each do |a|%>
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <% eta = Etablissement.where(id: a.etablissement_id)%>
+      <% if eta.last.nil?%>
+      <td style="color: red;">Pas d'établissement attitré</td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%else%>
+      <td><%=eta.last.nom%> <%=eta.last.address%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%end%>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+
+
+
+  </div>
+
+<%# -------------------------------------------------------------------------------------------------------%>
+
+
+  <div class="tab-pane fade" id="pills-etudiant" role="tabpanel" aria-labelledby="pills-etudiant-tab">
+
+
+     <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Etablissement</th>
+
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pers = Personnel.where(emploi: "Etudiant 6è Année")%>
+    <%i = 1%>
+    <%@pers.each do |a|%>
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <% eta = Etablissement.where(id: a.etablissement_id)%>
+      <% if eta.last.nil?%>
+      <td style="color: red;">Pas d'établissement attitré</td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%else%>
+      <td><%=eta.last.nom%> <%=eta.last.address%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%end%>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+
+
+
+  </div>
+
+<%# -------------------------------------------------------------------------------------------------------%>
+
+
+  <div class="tab-pane fade" id="pills-manager" role="tabpanel" aria-labelledby="pills-manager-tab">
+
+     <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Etablissement</th>
+
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pers = Personnel.where(emploi: "Office Manager")%>
+    <%i = 1%>
+    <%@pers.each do |a|%>
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <% eta = Etablissement.where(id: a.etablissement_id)%>
+      <% if eta.last.nil?%>
+      <td style="color: red;">Pas d'établissement attitré</td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%else%>
+      <td><%=eta.last.nom%> <%=eta.last.address%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%end%>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+
+
+
+
+  </div>
+
+<%# -------------------------------------------------------------------------------------------------------%>
+
+
+  <div class="tab-pane fade" id="pills-prothesiste" role="tabpanel" aria-labelledby="pills-prothesiste-tab">
+
+
+     <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Etablissement</th>
+
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pers = Personnel.where(emploi: "Prothésiste")%>
+    <%i = 1%>
+    <%@pers.each do |a|%>
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <% eta = Etablissement.where(id: a.etablissement_id)%>
+      <% if eta.last.nil?%>
+      <td style="color: red;">Pas d'établissement attitré</td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%else%>
+      <td><%=eta.last.nom%> <%=eta.last.address%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%end%>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+
+
+
+
+  </div>
+
+<%# -------------------------------------------------------------------------------------------------------%>
+
+
+
+  <div class="tab-pane fade" id="pills-secretaire" role="tabpanel" aria-labelledby="pills-secretaire-tab">
+
+
+      <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Etablissement</th>
+
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pers = Personnel.where(emploi: "Secrétaire")%>
+    <%i = 1%>
+    <%@pers.each do |a|%>
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <% eta = Etablissement.where(id: a.etablissement_id)%>
+      <% if eta.last.nil?%>
+      <td style="color: red;">Pas d'établissement attitré</td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%else%>
+      <td><%=eta.last.nom%> <%=eta.last.address%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_personnel_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=personnel_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_personnel_path(personnelid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce personnel ?')" title="Effacer"></a>
+      </td>
+      <%end%>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+
+
+
+
+  </div>
+
+<%# -------------------------------------------------------------------------------------------------------%>
+
+
+
+</div>
+
+</container>

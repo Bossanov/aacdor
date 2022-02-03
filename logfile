@@ -1,0 +1,75 @@
+2021-12-30 11:51:26.829 CET [3136] LOG:  starting PostgreSQL 14.1 on x86_64-apple-darwin21.1.0, compiled by Apple clang version 13.0.0 (clang-1300.0.29.3), 64-bit
+2021-12-30 11:51:26.830 CET [3136] LOG:  listening on IPv6 address "::1", port 5432
+2021-12-30 11:51:26.830 CET [3136] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-12-30 11:51:26.831 CET [3136] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-12-30 11:51:26.835 CET [3137] LOG:  database system was shut down at 2021-12-30 11:46:41 CET
+2021-12-30 11:51:26.838 CET [3136] LOG:  database system is ready to accept connections
+2022-01-31 10:49:46.093 CET [36243] ERROR:  null value in column "typegen" of relation "generateurbases" violates not-null constraint
+2022-01-31 10:49:46.093 CET [36243] DETAIL:  Failing row contains (12, BELMONT, PHOT XII 303, null, 2022-01-31 09:49:46.091103, 2022-01-31 09:49:46.091103).
+2022-01-31 10:49:46.093 CET [36243] STATEMENT:  INSERT INTO "generateurbases" ("marque", "modele", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"
+2022-01-31 11:55:58.994 CET [38152] ERROR:  null value in column "telephone" of relation "pcrs" violates not-null constraint
+2022-01-31 11:55:58.994 CET [38152] DETAIL:  Failing row contains (18, LE JAN, Dominique, 637 rue Gand, 59200, TOURCOING, null, 2022-01-31 10:55:58.993086, 2022-01-31 10:55:58.993086, 1614, mailto:NC@nc3.fr, NC, no, NC, null).
+2022-01-31 11:55:58.994 CET [38152] STATEMENT:  INSERT INTO "pcrs" ("id", "nom", "prenom", "rue", "codepostal", "ville", "created_at", "updated_at", "user_id", "email", "datenaissance", "statut", "dateexpdiplome") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING "id"
+2022-01-31 11:58:13.532 CET [38263] ERROR:  null value in column "rue" of relation "pcrs" violates not-null constraint
+2022-01-31 11:58:13.532 CET [38263] DETAIL:  Failing row contains (36, DJANATI, Sandrine, null, null, null, null, 2022-01-31 10:58:13.53153, 2022-01-31 10:58:13.53153, 1687, mailto:NC@nc7.fr, null, no, null, null).
+2022-01-31 11:58:13.532 CET [38263] STATEMENT:  INSERT INTO "pcrs" ("id", "nom", "prenom", "created_at", "updated_at", "user_id", "email", "statut") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"
+2022-01-31 17:26:27.915 CET [41613] ERROR:  relation "medecins" does not exist at character 454
+2022-01-31 17:26:27.915 CET [41613] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	       c.collname, col_description(a.attrelid, a.attnum) AS comment
+	  FROM pg_attribute a
+	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+	 WHERE a.attrelid = '"medecins"'::regclass
+	   AND a.attnum > 0 AND NOT a.attisdropped
+	 ORDER BY a.attnum
+	
+2022-01-31 17:27:13.924 CET [41613] ERROR:  relation "medecins" does not exist at character 454
+2022-01-31 17:27:13.924 CET [41613] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	       c.collname, col_description(a.attrelid, a.attnum) AS comment
+	  FROM pg_attribute a
+	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+	 WHERE a.attrelid = '"medecins"'::regclass
+	   AND a.attnum > 0 AND NOT a.attisdropped
+	 ORDER BY a.attnum
+	
+2022-01-31 17:27:27.484 CET [41613] ERROR:  relation "medecins" does not exist at character 454
+2022-01-31 17:27:27.484 CET [41613] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	       c.collname, col_description(a.attrelid, a.attnum) AS comment
+	  FROM pg_attribute a
+	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+	 WHERE a.attrelid = '"medecins"'::regclass
+	   AND a.attnum > 0 AND NOT a.attisdropped
+	 ORDER BY a.attnum
+	
+2022-02-01 12:12:28.735 CET [46799] ERROR:  null value in column "departement" of relation "etablissements" violates not-null constraint
+2022-02-01 12:12:28.735 CET [46799] DETAIL:  Failing row contains (0, Rue, Codepostal, Ville, null, Rue Codepostal Ville, 2022-02-01 11:12:28.732005, 2022-02-01 11:12:28.732005, null, null,  , tel, Complément rue, statut, pcr_id, siret, type, nom).
+2022-02-01 12:12:28.735 CET [46799] STATEMENT:  INSERT INTO "etablissements" ("id", "rue", "codepostal", "ville", "address", "created_at", "updated_at", "email", "telephone", "complementrue", "statut", "pcr_id", "siret", "typeeta", "nom") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING "id"
+2022-02-01 12:14:31.688 CET [46875] ERROR:  null value in column "departement" of relation "etablissements" violates not-null constraint
+2022-02-01 12:14:31.688 CET [46875] DETAIL:  Failing row contains (0, Rue, Codepostal, Ville, null, Rue Codepostal Ville, 2022-02-01 11:14:31.685482, 2022-02-01 11:14:31.685482, null, null,  , tel, Complément rue, statut, pcr_id, siret, type, nom).
+2022-02-01 12:14:31.688 CET [46875] STATEMENT:  INSERT INTO "etablissements" ("id", "rue", "codepostal", "ville", "address", "created_at", "updated_at", "email", "telephone", "complementrue", "statut", "pcr_id", "siret", "typeeta", "nom") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING "id"
+2022-02-01 12:15:15.629 CET [46914] ERROR:  null value in column "departement" of relation "etablissements" violates not-null constraint
+2022-02-01 12:15:15.629 CET [46914] DETAIL:  Failing row contains (0, Rue, Codepostal, Ville, null, Rue Codepostal Ville, 2022-02-01 11:15:15.626954, 2022-02-01 11:15:15.626954, null, null,  , tel, Complément rue, statut, pcr_id, siret, type, nom).
+2022-02-01 12:15:15.629 CET [46914] STATEMENT:  INSERT INTO "etablissements" ("id", "rue", "codepostal", "ville", "address", "created_at", "updated_at", "email", "telephone", "complementrue", "statut", "pcr_id", "siret", "typeeta", "nom") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING "id"
+2022-02-01 12:16:01.896 CET [46950] ERROR:  null value in column "departement" of relation "etablissements" violates not-null constraint
+2022-02-01 12:16:01.896 CET [46950] DETAIL:  Failing row contains (0, Rue, Codepostal, Ville, null, Rue Codepostal Ville, 2022-02-01 11:16:01.893329, 2022-02-01 11:16:01.893329, null, null,  , tel, Complément rue, statut, pcr_id, siret, type, nom).
+2022-02-01 12:16:01.896 CET [46950] STATEMENT:  INSERT INTO "etablissements" ("id", "rue", "codepostal", "ville", "address", "created_at", "updated_at", "email", "telephone", "complementrue", "statut", "pcr_id", "siret", "typeeta", "nom") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING "id"
+2022-02-01 12:17:02.337 CET [46992] ERROR:  null value in column "departement" of relation "etablissements" violates not-null constraint
+2022-02-01 12:17:02.337 CET [46992] DETAIL:  Failing row contains (0, Rue, Codepostal, Ville, null, Rue Codepostal Ville, 2022-02-01 11:17:02.333633, 2022-02-01 11:17:02.333633, null, null,  , tel, Complément rue, statut, pcr_id, siret, type, nom).
+2022-02-01 12:17:02.337 CET [46992] STATEMENT:  INSERT INTO "etablissements" ("id", "rue", "codepostal", "ville", "address", "created_at", "updated_at", "email", "telephone", "complementrue", "statut", "pcr_id", "siret", "typeeta", "nom") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING "id"
+2022-02-01 12:26:21.770 CET [47021] ERROR:  null value in column "departement" of relation "etablissements" violates not-null constraint
+2022-02-01 12:26:21.770 CET [47021] DETAIL:  Failing row contains (963, 48 rue de Rethel, 08460, SIGNY L'ABBAYE, null, 48 rue de Rethel 08460 SIGNY L'ABBAYE, 2022-02-01 11:26:21.768209, 2022-02-01 11:26:21.768209, 49.6975334, 4.4226685,  , null, null, yes, 14, null, null, null).
+2022-02-01 12:26:21.770 CET [47021] STATEMENT:  INSERT INTO "etablissements" ("id", "rue", "codepostal", "ville", "address", "created_at", "updated_at", "latitude", "longitude", "email", "pcr_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"
+2022-02-01 16:43:46.977 CET [50425] ERROR:  null value in column "respactnucleaire" of relation "adherents" violates not-null constraint
+2022-02-01 16:43:46.977 CET [50425] DETAIL:  Failing row contains (2, 106 rue Claude Bernard, TOURCOING, 309 316 743 00017, NC, GRAS, Yves, NC, 03 20 36 07 67, 09/07/1948, M, ygras001@cegetel.rss.fr, NC, null, 2022-02-01 15:43:46.976404, 2022-02-01 15:43:46.976404, 1985, null, null, 106 rue Claude Bernard TOURCOING 309 316 743 00017, 59200, 620, yes, 766).
+2022-02-01 16:43:46.977 CET [50425] STATEMENT:  INSERT INTO "adherents" ("rue", "codepostal", "ville", "departement", "nom", "prenom", "siret", "tauxhorairesemaine", "naissance", "sexe", "telephone", "numsecu", "created_at", "updated_at", "user_id", "address", "detailadresse", "email", "statut", "etablissement_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) RETURNING "id"
+2022-02-02 14:40:07.659 CET [55173] ERROR:  null value in column "prenom" of relation "personnels" violates not-null constraint
+2022-02-02 14:40:07.659 CET [55173] DETAIL:  Failing row contains (366, Arnaud, null, NC, Chirurgien-Dentiste, CANTAIS, non, 565, NC, NC, NC, NC, NC, NC, NC, 2022-02-02 13:40:07.657863, 2022-02-02 13:40:07.657863).
+2022-02-02 14:40:07.659 CET [55173] STATEMENT:  INSERT INTO "personnels" ("nom", "emploi", "statut", "sexe", "etablissement_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"

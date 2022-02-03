@@ -1,0 +1,4 @@
+class Medecin < ApplicationRecord
+
+
+end

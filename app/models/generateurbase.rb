@@ -1,0 +1,4 @@
+class Generateurbase < ApplicationRecord
+
+
+end

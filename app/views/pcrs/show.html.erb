@@ -1,0 +1,41 @@
+<h1>Profil de <%=@pcr.last.prenom.capitalize%> <%=@pcr.last.nom.upcase%></h1>
+<div class="card-deck" style="margin: 40px;">
+  <div class="card">
+    <img src="https://res.cloudinary.com/dz83jh064/image/upload/v1643644494/idees-recuperer-coordonnees-clients_fq04rp.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Coordonnées</h5>
+      <p class="card-text">
+
+        <p class="fas fa-map-marker-alt">     <%=@pcr.last.rue%> <%=@pcr.last.codepostal%> <%=@pcr.last.ville%> </p><br>
+        <p class="fas fa-at">     <%=@pcr.last.email%></p><br>
+        <p class="fas fa-phone-square">     <%=@pcr.last.telephone%></p>
+
+
+      </p>
+
+    </div>
+  </div>
+  <div class="card">
+    <img src="https://res.cloudinary.com/dz83jh064/image/upload/v1643644585/shutterstock_1274376745_dff95q.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Description</h5>
+      <p class="card-text">
+
+
+      </p>
+
+    </div>
+  </div>
+  <div class="card">
+    <img src="https://res.cloudinary.com/dz83jh064/image/upload/v1643644699/Sans-titre-700x500_ewlxbf.png" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Statistiques</h5>
+      <p class="card-text">Nombre de cabinets attitrés actuellement</p>
+
+    </div>
+  </div>
+
+
+</div>
+<a href="<%=edit_pcr_path(@pcr.last.id)%>" class="btn btn-primary" style="margin: 10px;">Modifier</a>
+    <a href="<%=pcrs_path%>" class="btn btn-danger" style="margin: 10px;">Retour</a>

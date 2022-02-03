@@ -5,8 +5,8 @@ class PcrsController < ApplicationController
   end
   def create
     @pcr = Pcr.new(pcr_params)
-    num = Pcr.all.count + 1
-    @pcr.id = num
+    #num = Pcr.all.count + 1
+    #@pcr.id = num
     if @pcr.user_id.nil?
 
       user = User.create!(
@@ -20,10 +20,10 @@ class PcrsController < ApplicationController
     end
     if @pcr.save
       flash[:notice] = "Le CRP a été créé."
-      redirect_to root_path
+      redirect_to pcrs_path
     else
       flash[:notice] = 'Oups nous avons un problème'
-      redirect_to root_path
+      redirect_to pcrs_path
     end
   end
   def edit
@@ -36,13 +36,13 @@ class PcrsController < ApplicationController
 
     if @pcr.update(pcr_params)
       flash[:notice] = 'La saisie a correctement été actualisée.'
-      redirect_to pcr_path(@pcr)
+      redirect_to pcrs_path
 
 
 
     else
       flash[:notice] = 'Oups nous avons un problème'
-      redirect_to pcr_path(@pcr)
+      redirect_to pcrs_path
     end
   end
 
@@ -65,7 +65,7 @@ class PcrsController < ApplicationController
   private
 
   def pcr_params
-    params.require(:pcr).permit(:rue, :codepostal, :ville, :departement, :nom, :prenom,  :telephone, :email )
+    params.require(:pcr).permit(:rue, :codepostal, :ville, :nom, :prenom,  :telephone, :email, :datenaissance, :statut, :content )
   end
 
 end

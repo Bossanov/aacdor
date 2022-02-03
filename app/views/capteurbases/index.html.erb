@@ -1,0 +1,45 @@
+<container style="margin: 40px;">
+
+
+<div class="card text-center" style="margin: 40px;">
+
+  <div class="card-body">
+    <h2 class="card-title">Liste des capteurs(<%=Capteurbase.all.length%>)</h2>
+
+    <a href="<%=new_capteurbasis_path%>" class="btn btn-danger">Nouveau capteur</a>
+  </div>
+
+</div>
+
+ <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Marque</th>
+      <th scope="col">Modèle</th>
+      <th scope="col">Type</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <%i = 1%>
+    <%@capteurbases.each do |a|%>
+
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.marque%></td>
+      <td><%=a.modele%></td>
+      <td><%=a.typecap%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_capteurbasis_path(a)%>" title="Modifier"></a>
+
+        <a class="fas fa-trash-alt" href="<%=effacer_capteurbase_path(capteurbaseid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce capteur ?')" title="Effacer"></a>
+      </td>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+</container>
+

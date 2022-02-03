@@ -1,0 +1,62 @@
+<container >
+  <h1>Modifier la fiche du RCP</h1>
+
+  <%= simple_form_for @pcr do |f| %>
+  <form >
+  <div class="form-row" style="margin: 40px;">
+    <div class="form-group col-md-4">
+      <%= f.input :nom, type: "Nom", class: "form-control", placeholder: "Nom", label: false%>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.input :prenom, type: "Prenom", class: "form-control", placeholder: "Prenom", label: false%>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.input :telephone, type: "Telephone", class: "form-control", placeholder: "Téléphone", label: false%>
+    </div>
+
+  </div>
+  <div class="form-row" style="margin: 40px;">
+    <div class="form-group col-md-8">
+      <%= f.input :rue, type: "Rue", class: "form-control", placeholder: "Rue", label:"Numéro et rue", label: false%>
+    </div>
+    <div class="form-group col-md-4">
+      <%= f.input :codepostal, type: "Codepostal", class: "form-control", placeholder: "Code postal", label: false%>
+    </div>
+
+
+  </div>
+  <div class="form-row" style="margin: 40px;">
+    <div class="form-group col-md-6">
+      <%= f.input :ville, type: "Ville", class: "form-control", placeholder: "Ville", label: false%>
+    </div>
+    <div class="form-group col-md-6">
+      <%= f.input :email, type: "Email", class: "form-control", placeholder: "Email", label: false%>
+    </div>
+
+  </div>
+
+  <div class="form-row" style="margin: 40px;">
+    <div class="form-group col-md-6">
+      <%= f.input :datenaissance, type: "datenaissance", class: "form-control", placeholder: "Date de naissance", label: false%>
+
+    </div>
+    <div class="form-group col-md-6">
+      <%= f.input :dateexpdiplome, type: "dateexpdiplome", class: "form-control", placeholder: "Date d'expiration du diplome", label: false%>
+
+    </div>
+  </div>
+  <div class="form-row" style="margin: 40px;">
+    <div class="form-group col-md-4">
+      <%= f.input :statut, as: :radio_buttons, collection: ['yes', 'no'] %>
+    </div>
+    <div class="form-group col-md-8">
+      <%= f.input :content, label:'Descriptif du poste',  type:"text", classe:"form-control", placeholder:"Écrivez ici"%>
+    </div>
+
+  </div>
+
+  <button type="submit" class="btn btn-primary" style="margin: 40px;">Ajouter</button>
+  <a href="<%=pcrs_path%>" class="btn btn-danger" >Retour</a>
+</form>
+<%end%>
+</container>

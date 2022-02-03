@@ -1,541 +1,344 @@
+puts "----------------------------------------------"
+puts "MENU PRINCIPAL"
+puts "----------------------------------------------"
+
+puts "
+1: Réinitialisation de la base de donnée
+2: Importation des établissements
+3: Importation des adhérents
+4: Importation du personnel
+5: Importation du matériel
+6:
+7: Importation de la base des générateurs et capteurs
+8: Importation de la base des pcr , medecins du travail"
+
+command = STDIN.gets.chomp
+
+
+if command == "1"
 puts "Réinitialisation de la base de donnée"
 User.destroy_all
 Adherent.destroy_all
 Etablissement.destroy_all
 Pcr.destroy_all
-
-puts "----------------------------------------------"
-puts "Création des CRP"
-puts "----------------------------------------------"
-
-puts "Création CRP Michel STAUMONT"
-userpcr = User.create!(
-        email: "staumont.michel@icloud.com",
-        password: "Bossanova1",
-        statut: "pcr"
-      )
-userpcr.save
-pcr = Pcr.create!(
-        nom: "STAUMONT",
-        prenom: "Michel",
-        rue: "25 rue du cateau",
-        codepostal: "59550",
-        ville: "Fontaine au bois",
-        departement: "Nord",
-        telephone: "0661526441",
-        email: userpcr.email,
-        user_id: userpcr.id
-      )
-pcr.save
+Capteurbase.destroy_all
+Generateurbase.destroy_all
+Message.destroy_all
+Medecin.destroy_all
 
 
-puts "Création CRP Anne SERGENT"
 
 
-userpcr = User.create!(
-        email: "annsergent@yahoo.fr",
-        password: "Bossanova1",
-        statut: "pcr"
-      )
-userpcr.save
-pcr = Pcr.create!(
-        nom: "SERGENT",
-        prenom: "Anne",
-        rue: "",
-        codepostal: "",
-        ville: "",
-        departement: "",
-        telephone: "",
-        email: userpcr.email,
-        user_id: userpcr.id
-      )
-pcr.save
+elsif command == "2"
 
+  xls_file = Roo::Excelx.new('db/etablissements.xlsx')
+  s = Roo::CSV.new("db/etablissements.csv")
+  xls_file.to_csv("db/etablissements.csv")
+  CSV.foreach("db/etablissements.csv") do |row|
+    if row[4].to_i > 58999 && row[4].to_i < 60000
+      departement = "Nord"
+    elsif row[4].to_i > 61999 && row[4].to_i < 63000
+      departement = "Pas de Calais"
+    elsif row[4].to_i > 79999 && row[4].to_i < 81000
+      departement = "Somme"
+    elsif row[4].to_i > 59999 && row[4].to_i < 61000
+      departement = "Oise"
+    elsif row[4].to_i > 1999 && row[4].to_i < 3000
+      departement = "Aisne"
+    elsif row[4].to_i > 7999 && row[4].to_i < 9000
+      departement = "Ardennes"
+    end
+    if row[8].nil?
+      nom = "Cabinet" + row[5]
+    end
 
-#Début Anne SERGENT
-puts "----------------------------------------------"
-puts "Création de la base de donnée Anne Sergent"
-puts "----------------------------------------------"
-xls_file = Roo::Excelx.new('db/annesergent.xlsx')
-s = Roo::CSV.new("db/annesergent.csv")
-xls_file.to_csv("db/annesergent.csv")
-l = 1
-CSV.foreach("db/annesergent.csv") do |row|
-    eta = Etablissement.all.count + 1
-    num = Adherent.all.count + 1
-    puts row[2]
-    puts "1 vérification établissement"
-
-    etaunique = Etablissement.where(nom: row[1])
-
-    if etaunique.length == 0
-      puts "1.2 création nouvel établissement"
-
-    if row[4].nil? || row[5].nil? || row[6].nil?
-
+    puts departement
+    if row[8].nil?
     etablissement = Etablissement.create!(
-      id: eta,
-      nom: row[1],
-      rue:"NC",
-      codepostal:"NC",
-      ville:"NC",
-      departement:"NC",
-      address:" ",
-      siret: "NC",
-      typeeta: "NC",
-      telephone: "NC",
-      pcreta: "Anne SERGENT",
-      email: "NC"
+
+      id: row[0],
+      rue: row[1],
+      codepostal: row[4],
+      ville: row[5],
+      departement: departement,
+      address: row[1] + " " + row[4] + " " + row[5],
+      email: " ",
+      telephone: row[10],
+      complementrue: row[2],
+      pcr_id: row[6],
+      siret: row[9],
+      typeeta: row[7],
+      nom:"Cabinet" + " " + row[5],
+      statut: row[3]
 
       )
+    etablissement.save
+  else
+    etablissement = Etablissement.create!(
 
-    else
+      id: row[0],
+      rue: row[1],
+      codepostal: row[4],
+      ville: row[5],
+      departement: departement,
+      address: row[1] + " " + row[4] + " " + row[5],
+      email: " ",
+      telephone: row[10],
+      complementrue: row[2],
+      pcr_id: row[6],
+      siret: row[9],
+      typeeta: row[7],
+      nom:row[8],
+      statut: row[3]
 
-    dpteta = ""
-        cp = row[5]
-        if cp[0..1] = "59"
-          dpteta = "Nord"
-        elsif cp[0..1] = "62"
-          dpteta = "Pas de Calais"
-        elsif cp[0..1] = "02"
-          dpteta = "Aisne"
-        elsif cp[0..1] = "80"
-          dpteta = "Somme"
-        elsif cp[0..1] = "60"
-          dpteta = "oise"
-        end
-
-
-      etablissement = Etablissement.create!(
-      id: eta,
-      nom: row[1],
-      rue: row[4],
-      codepostal: row[5],
-      ville: row[6],
-      departement: dpteta,
-      address: row[4] + " " + row[5] + " " + row[6],
-      siret: "NC",
-      typeeta: "NC",
-      telephone: "NC",
-      pcreta: "Anne SERGENT",
-      email: "NC"
       )
-
-    end
-     etablissement.save
-    end
-
-
-    puts "2 création user"
-
-
-    ifuser = User.where(email: row[8])
-
-    if ifuser.length == 0
-      if row[8].nil?
-      user = User.create!(
-        email: "nc@nc.fr" + l.to_s,
-        password: "Bossanova1",
-        statut: "adherent"
-        )
-        l = l + 1
-      else
-        user = User.create!(
-              email: row[8],
-              password: "Bossanova1",
-              statut: "adherent"
-        )
-      end
-    else
-      if row[8].nil?
-      user = User.create!(
-        email: "nc@nc.fr" + l.to_s,
-        password: "Bossanova1",
-        statut: "adherent"
-      )
-      l = l + 1
-      else
-      user = User.create!(
-        email: row[8] + l.to_s,
-        password: "Bossanova1",
-        statut: "adherent"
-      )
-      l = l + 1
-      end
-    end
-    user.save
-    puts "3 création Adhérent"
-    et = Etablissement.where(nom: row[1])
-    if row[4].nil? || row[5].nil? || row[6].nil?
-      if row[7].nil?
-        prof = Adherent.create!(
-          prenom: row[3],
-          nom: row[2],
-          id: num,
-          rue: "NC",
-          codepostal: "NC",
-          ville: "NC",
-          departement: "NC",
-          siret: "NC",
-          emploi: "Chirurgien-Dentiste",
-          tauxhorairesemaine: "NC",
-          naissance: "NC",
-          sexe: "NC",
-          telephone: "NC",
-          numsecu: "NC",
-          respactnucleaire: "NC",
-          address: "",
-          user_id: user.id,
-          etablissement_id: et.last.id,
-          pcr: "Anne SERGENT",
-          email: user.email
-        )
-      else
-        prof = Adherent.create!(
-          prenom: row[3],
-          nom: row[2],
-          id: num,
-          rue: "NC",
-          codepostal: "NC",
-          ville: "NC",
-          departement: "NC",
-          siret: "NC",
-          emploi: "Chirurgien-Dentiste",
-          tauxhorairesemaine: "NC",
-          naissance: "NC",
-          sexe: "NC",
-          telephone: row[7],
-          numsecu: "NC",
-          respactnucleaire: "NC",
-          address: "",
-          user_id: user.id,
-          etablissement_id: et.last.id,
-          pcr: "Anne SERGENT",
-          email: user.email
-        )
-      end
-    else
-
-       dpt = ""
-        cp = row[5]
-        if cp[0..1] = "59"
-          dpt = "Nord"
-        elsif cp[0..1] = "62"
-          dpt = "Pas de Calais"
-        elsif cp[0..1] = "02"
-          dpt = "Aisne"
-        elsif cp[0..1] = "80"
-          dpt = "Somme"
-        elsif cp[0..1] = "60"
-          dpt = "oise"
-        end
-
-      if row[7].nil?
-
-
-
-
-
-        prof = Adherent.create!(
-          prenom: row[3],
-          nom: row[2],
-          id: num,
-          rue: row[4],
-          codepostal: row[5],
-          ville: row[6],
-          departement: dpt,
-          siret: "NC",
-          emploi: "Chirurgien-Dentiste",
-          tauxhorairesemaine: "NC",
-          naissance: "NC",
-          sexe: "NC",
-          telephone: "NC",
-          numsecu: "NC",
-          respactnucleaire: "NC",
-          address: row[4] + " " + row[5] + " " + row[6],
-          user_id: user.id,
-          etablissement_id: et.last.id,
-          pcr: "Anne SERGENT",
-          email: user.email
-        )
-      else
-        prof = Adherent.create!(
-          prenom: row[3],
-          nom: row[2],
-          id: num,
-          rue: row[4],
-          codepostal: row[5],
-          ville: row[6],
-          departement: dpt,
-          siret: "NC",
-          emploi: "Chirurgien-Dentiste",
-          tauxhorairesemaine: "NC",
-          naissance: "NC",
-          sexe: "NC",
-          telephone: row[7],
-          numsecu: "NC",
-          respactnucleaire: "NC",
-          address: row[4] + " " + row[5] + " " + row[6],
-          user_id: user.id,
-          etablissement_id: et.last.id,
-          pcr: "Anne SERGENT",
-          email: user.email
-        )
-      end
-    end
-    prof.save
-
+    etablissement.save
+  end
   end
 
 
-#Fin Anne SERGENT
-
-
-
-
-#Début Michel STAUMONT
-puts "----------------------------------------------"
-puts "Création de la base de donnée Michel STAUMONT"
-puts "----------------------------------------------"
-
-xls_file = Roo::Excelx.new('db/michelstaumont.xlsx')
-s = Roo::CSV.new("db/michelstaumont.csv")
-xls_file.to_csv("db/michelstaumont.csv")
-i = 100
-CSV.foreach("db/michelstaumont.csv") do |row|
-    eta = Etablissement.all.count + 1
-    num = Adherent.all.count + 1
-    puts row[2]
-    puts "1 vérification établissement"
-
-    etaunique = Etablissement.where(nom: row[1])
-
-    if etaunique.length == 0
-      puts "1.2 création nouvel établissement"
-
-    if row[4].nil? || row[5].nil? || row[6].nil?
-
-    etablissement = Etablissement.create!(
-      id: eta,
-      nom: row[1],
-      rue:"NC",
-      codepostal:"NC",
-      ville:"NC",
-      departement:"NC",
-      address:" ",
-      siret: "NC",
-      typeeta: "NC",
-      telephone: "NC",
-      pcreta: "Michel STAUMONT",
-      email: "NC"
-
-      )
-
-    else
-
-    dpteta = ""
-        cp = row[5]
-        if cp[0..1] = "59"
-          dpteta = "Nord"
-        elsif cp[0..1] = "62"
-          dpteta = "Pas de Calais"
-        elsif cp[0..1] = "02"
-          dpteta = "Aisne"
-        elsif cp[0..1] = "80"
-          dpteta = "Somme"
-        elsif cp[0..1] = "60"
-          dpteta = "oise"
-        end
-
-
-      etablissement = Etablissement.create!(
-      id: eta,
-      nom: row[1],
-      rue: row[4],
-      codepostal: row[5],
-      ville: row[6],
-      departement: dpteta,
-      address: row[4] + " " + row[5] + " " + row[6],
-      siret: "NC",
-      typeeta: "NC",
-      telephone: "NC",
-      pcreta: "Michel STAUMONT",
-      email: "NC"
-      )
-
-    end
-     etablissement.save
-    end
-
-
-    puts "2 création user"
-
-
-    ifuser = User.where(email: row[8])
-
-    if ifuser.length == 0
-      if row[8].nil?
+elsif command == "3"
+  puts '-------------------------'
+  puts 'Importation des adhérents'
+  puts '-------------------------'
+  User.destroy_all
+  Pcr.destroy_all
+  Adherent.destroy_all
+  i = 1
+  xls_file = Roo::Excelx.new('db/adherents.xlsx')
+  s = Roo::CSV.new("db/adherents.csv")
+  xls_file.to_csv("db/adherents.csv")
+  CSV.foreach("db/adherents.csv") do |row|
+    puts row[3] + " " + row[4]
+    #if row[14].nil?
+    puts "Creation de l'user"
       user = User.create!(
-        email: "nc@nc.fr" + i.to_s,
-        password: "Bossanova1",
-        statut: "adherent"
-        )
-        i = i + 1
-      else
-        user = User.create!(
-              email: row[8],
-              password: "Bossanova1",
-              statut: "adherent"
-        )
-      end
-    else
-      if row[8].nil?
-      user = User.create!(
-        email: "nc@nc.fr" + i.to_s,
-        password: "Bossanova1",
-        statut: "adherent"
-      )
+      statut: "adherent",
+      email:i.to_s + row[4] + "@aacdor.fr" ,
+      password: "Bossanova1")
       i = i + 1
-      else
-      user = User.create!(
-        email: row[8] + i.to_s,
-        password: "Bossanova1",
-        statut: "adherent"
-      )
-      i = i + 1
-      end
-    end
+    #else
+     # user = User.create!(
+     # statut: "adherent",
+     # email:row[14] ,
+     # password: "Bossanova1" )
+    #end
     user.save
-    puts "3 création Adhérent"
-    et = Etablissement.where(nom: row[1])
-    if row[4].nil? || row[5].nil? || row[6].nil?
-      if row[7].nil?
-        prof = Adherent.create!(
-          prenom: row[3],
-          nom: row[2],
-          id: num,
-          rue: "NC",
-          codepostal: "NC",
-          ville: "NC",
-          departement: "NC",
-          siret: "NC",
-          emploi: "Chirurgien-Dentiste",
-          tauxhorairesemaine: "NC",
-          naissance: "NC",
-          sexe: "NC",
-          telephone: "NC",
-          numsecu: "NC",
-          respactnucleaire: "NC",
-          address: "",
-          user_id: user.id,
-          etablissement_id: et.last.id,
-          pcr: "Michel STAUMONT",
-          email: user.email
-        )
-      else
-        prof = Adherent.create!(
-          prenom: row[3],
-          nom: row[2],
-          id: num,
-          rue: "NC",
-          codepostal: "NC",
-          ville: "NC",
-          departement: "NC",
-          siret: "NC",
-          emploi: "Chirurgien-Dentiste",
-          tauxhorairesemaine: "NC",
-          naissance: "NC",
-          sexe: "NC",
-          telephone: row[7],
-          numsecu: "NC",
-          respactnucleaire: "NC",
-          address: "",
-          user_id: user.id,
-          etablissement_id: et.last.id,
-          pcr: "Michel STAUMONT",
-          email: user.email
-        )
-      end
-    else
+    puts "Creation de l'adhérent"
 
-       dpt = ""
-        cp = row[5]
-        if cp[0..1] = "59"
-          dpt = "Nord"
-        elsif cp[0..1] = "62"
-          dpt = "Pas de Calais"
-        elsif cp[0..1] = "02"
-          dpt = "Aisne"
-        elsif cp[0..1] = "80"
-          dpt = "Somme"
-        elsif cp[0..1] = "60"
-          dpt = "oise"
-        end
-
-      if row[7].nil?
+    adherent = Adherent.create!(
+      rue: row[6],
+      codepostal: row[8],
+      ville: row[9],
+      departement: "NC",
+      nom: row[3],
+      prenom: row[4] ,
+      siret: row[10],
+      tauxhorairesemaine: row[12],
+      naissance: row[5],
+      sexe: row[0],
+      telephone: row[13],
+      numsecu: row[11],
+      respactnucleaire: row[16],
+      user_id: user.id,
+      address: row[6] + " " + row[8] + " " + row[9],
+      detailadresse: row[7],
+      etablissement_id: row[2] ,
+      email: row[14],
+      statut: row[1]
 
 
 
+      )
 
-
-        prof = Adherent.create!(
-          prenom: row[3],
-          nom: row[2],
-          id: num,
-          rue: row[4],
-          codepostal: row[5],
-          ville: row[6],
-          departement: dpt,
-          siret: "NC",
-          emploi: "Chirurgien-Dentiste",
-          tauxhorairesemaine: "NC",
-          naissance: "NC",
-          sexe: "NC",
-          telephone: "NC",
-          numsecu: "NC",
-          respactnucleaire: "NC",
-          address: row[4] + " " + row[5] + " " + row[6],
-          user_id: user.id,
-          etablissement_id: et.last.id,
-          pcr: "Michel STAUMONT",
-          email: user.email
-        )
-      else
-        prof = Adherent.create!(
-          prenom: row[3],
-          nom: row[2],
-          id: num,
-          rue: row[4],
-          codepostal: row[5],
-          ville: row[6],
-          departement: dpt,
-          siret: "NC",
-          emploi: "Chirurgien-Dentiste",
-          tauxhorairesemaine: "NC",
-          naissance: "NC",
-          sexe: "NC",
-          telephone: row[7],
-          numsecu: "NC",
-          respactnucleaire: "NC",
-          address: row[4] + " " + row[5] + " " + row[6],
-          user_id: user.id,
-          etablissement_id: et.last.id,
-          pcr: "Michel STAUMONT",
-          email: user.email
-        )
-      end
-    end
-    prof.save
+    adherent.save
 
   end
-
-#Fin Michel STAUMONT
-
-puts 'création du profil admin '
-useradmin = User.create!(
+    useradmin = User.create!(
         email: "staumont.antoine@me.com",
         password: "Bossanova1",
         statut: "admin"
       )
-useradmin.save
-puts 'Importation effectuée avec succès'
+  useradmin.save
+
+elsif command == "4"
+
+  puts '------------------------'
+  puts 'Importation du personnel'
+  puts '------------------------'
+  Personnel.destroy_all
+
+
+  xls_file = Roo::Excelx.new('db/personnel.xlsx')
+  s = Roo::CSV.new("db/personnel.csv")
+  xls_file.to_csv("db/personnel.csv")
+  CSV.foreach("db/personnel.csv") do |row|
+    puts row[3] + " " + row[4]
+    personnel = Personnel.create!(
+      nom: row[3],
+      prenom: row[4],
+      numsecu: "NC",
+      emploi: row[1] ,
+      statut: row[2] ,
+      sexe: row[5],
+      etablissement_id: row[0],
+      radiocomp: "NC",
+      datenaissance: "NC",
+      rue: "NC",
+      codepostal: "NC",
+      ville: "NC",
+      email: "NC",
+      telephone: "NC"
+
+      )
+
+    personnel.save
+
+  end
+
+elsif command == "5"
+
+  puts '-----------------------'
+  puts 'Importation du matériel'
+  puts '-----------------------'
+  Materiel.destroy_all
+  xls_file = Roo::Excelx.new('db/materiel.xlsx')
+  s = Roo::CSV.new("db/materiel.csv")
+  xls_file.to_csv("db/materiel.csv")
+  CSV.foreach("db/materiel.csv") do |row|
+  puts row[3]
+    materiel = Materiel.create!(
+      etablissement_id: row[0],
+      statut: row[1],
+      typemat: row[2],
+      marque: row[3],
+      modele: row[4],
+      numserie: row[5],
+      anfab: row[6],
+      anmes: row[7],
+      empla: row[8],
+      numasn: row[9],
+      datasn: row[10],
+      numsigis: row[11],
+      tensionmax: row[12],
+      intensitemax: row[13],
+      tempsmoyen: row[14],
+
+      mesorgagree: row[16]
+
+
+      )
+
+    materiel.save
+  end
+
+
+elsif command == "6"
+
+
+elsif command == "7"
+
+  puts '--------------------------------------'
+  puts 'Importation de la base des générateurs'
+  puts '--------------------------------------'
+
+  xls_file = Roo::Excelx.new('db/generateurbase.xlsx')
+  s = Roo::CSV.new("db/generateurbase.csv")
+  xls_file.to_csv("db/generateurbase.csv")
+  CSV.foreach("db/generateurbase.csv") do |row|
+    generateurbase = Generateurbase.create!(
+      marque: row[0],
+      modele: row[1],
+      typegen: row[2]
+    )
+  generateurbase.save
+  end
+  puts '-----------------------------------'
+  puts 'Importation de la base des capteurs'
+  puts '-----------------------------------'
+  xls_file = Roo::Excelx.new('db/capteurbase.xlsx')
+  s = Roo::CSV.new("db/capteurbase.csv")
+  xls_file.to_csv("db/capteurbase.csv")
+  CSV.foreach("db/capteurbase.csv") do |row|
+    capteurbase = Capteurbase.create!(
+      marque: row[0],
+      modele: row[1],
+      typecap: row[2]
+    )
+  capteurbase.save
+  end
+
+  elsif command == "8"
+
+
+
+  puts '-------------------------------'
+  puts 'Importation de la base des pcrs'
+  puts '-------------------------------'
+  xls_file = Roo::Excelx.new('db/rcp.xlsx')
+  s = Roo::CSV.new("db/rcp.csv")
+  xls_file.to_csv("db/rcp.csv")
+  CSV.foreach("db/rcp.csv") do |row|
+    puts row[2]
+    puts row[3]
+
+    user = User.create!(
+
+      email: row[9],
+      password: "Bossanova1",
+      statut: "pcr"
+
+      )
+    pcr = Pcr.create!(
+
+      id: row[0],
+      statut: row[1],
+      nom: row[2],
+      prenom: row[3] ,
+      rue: row[4],
+      codepostal: row[5],
+      ville: row[6],
+      datenaissance: row[7] ,
+      telephone: row[8],
+      email: row[9],
+      dateexpdiplome: row[10],
+      content: row[11],
+      user_id: user.id
+
+      )
+
+    user.save
+    pcr.save
+
+  end
+
+  puts '----------------------------------------------'
+  puts 'Importation de la base des medecins du travail'
+  puts '----------------------------------------------'
+
+  xls_file = Roo::Excelx.new('db/medecintravail.xlsx')
+  s = Roo::CSV.new("db/medecintravail.csv")
+  xls_file.to_csv("db/medecintravail.csv")
+  CSV.foreach("db/medecintravail.csv") do |row|
+    puts row[0]
+    puts row[1]
+  medecin = Medecin.create!(
+      nom: row[0],
+      prenom: row[1],
+      sexe: row[2],
+      rpps: row[3],
+      email: row[4],
+      nometa: row[5],
+      rue: row[6],
+      complementrue: row[7],
+      codepostal: row[8],
+      ville: row[9],
+      siret: row[10],
+      telephone: row[11],
+      siseri: row[12]
+
+    )
+    medecin.save
+  end
+
+end

@@ -1,0 +1,4 @@
+class Capteurbase < ApplicationRecord
+
+
+end

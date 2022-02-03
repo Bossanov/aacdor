@@ -9,7 +9,8 @@
         <h3 class="card-title">Etablissement <%=@etablissement.nom.upcase%></h3>
         <p class="card-text">Adresse : <%=@etablissement.address%></p>
         <p class="card-text">Téléphone : <%=@etablissement.telephone%></p>
-        <p class="card-text">PCR attitré : <%=@etablissement.pcreta%></p>
+        <% pcr = Pcr.where(id: @etablissement.pcr_id)%>
+        <p class="card-text">PCR attitré : <%=pcr.last.prenom.capitalize%> <%=pcr.last.nom.upcase%> </p>
       </div>
     </div>
   </div>
@@ -23,8 +24,17 @@
     <a class="nav-link" id="pills-etablissement-tab" data-toggle="pill" href="#pills-etablissement" role="tab" aria-controls="pills-etablissement" aria-selected="false">Description</a>
   </li>
   <li class="nav-item" role="presentation">
-    <a class="nav-link" id="pills-civil-tab" data-toggle="pill" href="#pills-civil" role="tab" aria-controls="pills-civil" aria-selected="false">Coordonnées</a>
+    <a class="nav-link" id="pills-civil-tab" data-toggle="pill" href="#pills-civil" role="tab" aria-controls="pills-civil" aria-selected="false">Fiche-Info</a>
   </li>
+
+
+   <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-matos-tab" data-toggle="pill" href="#pills-matos" role="tab" aria-controls="pills-matos" aria-selected="false">Matériel</a>
+  </li>
+
+
+
+
   <li class="nav-item" role="presentation">
     <a class="nav-link" id="pills-cotisation-tab" data-toggle="pill" href="#pills-cotisation" role="tab" aria-controls="pills-cotisation" aria-selected="false">Cotisations</a>
   </li>
@@ -84,24 +94,57 @@
           <div class="card border-dark mb-3" style="max-width: 18rem;">
             <div class="card-header">Personnel dans l'établissement</div>
             <div class="card-body text-dark">
-              <h5 class="card-title">Dark card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <% personnels = Personnel.where(etablissement_id: @etablissement.id)%>
+
+              <%if personnels.last.nil?%>
+
+              <h5 class="card-title">Pas de personnel</h5>
+
+              <%else%>
+              <% personnels.each do |a|%>
+              <% if a.sexe == "M"%>
+              <h5 class="card-title">Mr <%=a.prenom.capitalize%> <%=a.nom.upcase%></h5>
+              <% elsif a.emploi = "Chirurgien-Dentiste"%>
+              <h5 class="card-title">Dr <%=a.prenom.capitalize%> <%=a.nom.upcase%></h5>
+              <%else%>
+              <h5 class="card-title">Mme <%=a.prenom.capitalize%> <%=a.nom.upcase%></h5>
+
+              <%end%>
+              <%end%>
+              <%end%>
+              <a href="" class="btn btn-secondary btn-sm">Gérer le personnel</a>
             </div>
           </div>
           <div class="card border-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">Localisation</div>
+            <div class="card-header">Médecin du travail attitré</div>
             <div class="card-body text-dark">
-              <img src="https://maps.googleapis.com/maps/api/staticmap?center=<%=@etablissement.latitude%>,<%=@etablissement.longitude%>&zoom=14&size=250x250&key=<%=ENV['GOOGLE_API_KEY']%>">
+              <% if @etablissement.medecin_id.nil?%>
+                <h5 class="card-title">Aucun médecin attitré</h5>
+                <a href="" class="btn btn-secondary btn-sm">Ajouter</a>
+              <%else%>
+              <% med = Medecin.where(id: @etablissement.medecin_id)%>
+                <h5 class="card-title">Dr <%=med.last.prenom.capitalize%> <%=med.last.nom.upcase%></h5>
+                <a href="" class="btn btn-secondary btn-sm">Modifier</a>
+
+              <%end%>
             </div>
           </div>
           <div class="card border-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">StreetView</div>
+            <div class="card-header">PCR Attitré</div>
             <div class="card-body text-dark">
-              <img src="https://maps.googleapis.com/maps/api/streetview?size=250x250&location=<%=@etablissement.latitude%>,<%=@etablissement.longitude%>&fov=80&heading=70&pitch=0&key=<%=ENV['GOOGLE_API_KEY']%>" alt="...">
+              <% if @etablissement.pcr_id.nil?%>
+                <h5 class="card-title">Aucun pcr attitré</h5>
+                <a href="" class="btn btn-secondary btn-sm">Ajouter</a>
+              <%else%>
+              <% pcr = Pcr.where(id: @etablissement.pcr_id)%>
+                <h5 class="card-title">Dr <%=pcr.last.prenom.capitalize%> <%=pcr.last.nom.upcase%></h5>
+                <a href="" class="btn btn-secondary btn-sm">Modifier</a>
+
+              <%end%>
             </div>
           </div>
         </div>
-        <a href="#" class="btn btn-primary" style="margin: 10px;">Voir l'établissement</a>
+
       </div>
     </div>
   </div>
@@ -131,11 +174,13 @@
     </div>
   </div>
   <div class="form-row">
-
+     <div class="form-group col-md-12">
+      <%= f.input :complementrue, type: "ComplementRue", class: "form-control", placeholder: "Complément de rue", label:"Complément de rue"%>
+    </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4">
-      <%= f.input :departement, type: "Departement", class: "form-control", placeholder: "Département", collection: ["Nord", "Pas de Calais", "Somme", "Aisne", "Oise"]%>
+      <%= f.input :departement, type: "Departement", class: "form-control", placeholder: "Département", collection: ["Nord", "Pas de Calais", "Somme", "Aisne", "Oise", "Ardennes"]%>
     </div>
     <div class="form-group col-md-4">
       <%= f.input :siret, type: "Siret", class: "form-control", placeholder: "Siret"%>
@@ -146,20 +191,18 @@
   </div>
 
   <div class="form-row">
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
       <%= f.input :email, type: "email", class: "form-control", placeholder: "Email"%>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
       <%= f.input :telephone, type: "telephone", class: "form-control", placeholder: "Téléphone"%>
     </div>
-    <% pcr = []%>
-    <% @pcrs = Pcr.all%>
-    <% @pcrs.each do |a|%>
-    <% pcr << a.prenom.capitalize + " " + a.nom.upcase%>
-    <%end%>
-    <div class="form-group col-md-4">
-      <%= f.input :pcreta, type: "pcr", class: "form-control",label:"RCP désigné", placeholder: "RCP désigné", collection: pcr%>
-    </div>
+    <%#pcr = []%>
+    <%#@pcrs = Pcr.all%>
+    <%#@pcrs.each do |a|%>
+    <%#pcr << a.prenom.capitalize + " " + a.nom.upcase%>
+    <%#end%>
+
   </div>
 
 
@@ -172,15 +215,48 @@
   </div>
 
   <div class="tab-pane fade " id="pills-cotisation" role="tabpanel" aria-labelledby="pills-cotisation-tab" style="margin: 40px;">
+    <h1>A VENIR </h1>
+  </div>
+
+  <div class="tab-pane fade " id="pills-matos" role="tabpanel" aria-labelledby="pills-matos-tab" style="margin: 40px;">
+
+  <div class="card text-center" style="margin: 40px;">
+      <div class="card-header">
+        <h2>Etablissement <%=@etablissement.nom%></h2>
+      </div>
+
+   <div class="row row-cols-1 row-cols-md-3" style="margin: 40px;">
+
+
+   <% materiels = Materiel.where(etablissement_id: @etablissement.id)%>
+   <% i = 1 %>
+   <% materiels.each do |a|%>
+
+  <div class="col mb-4">
+    <div class="card border-success mb-3" style="max-width: 18rem;">
+  <div class="card-header bg-transparent border-success">Matériel #<%=i%></div>
+  <div class="card-body text-success">
+    <h5 class="card-title"><%=a.marque.upcase%> <%=a.modele%></h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <div class="card-footer bg-transparent border-success"><a href="" class="btn btn-secondary btn-sm">Voir la fiche</a></div>
+</div>
+  </div>
+  <% i = i + 1%>
+  <%end%>
+
+
+</div>
+</div>
 
   </div>
 
   <div class="tab-pane fade " id="pills-contrat" role="tabpanel" aria-labelledby="pills-contrat-tab" style="margin: 40px;">
-
+   <h1>A VENIR </h1>
   </div>
 
   <div class="tab-pane fade " id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" style="margin: 40px;">
-
+    <h1>A VENIR </h1>
   </div>
 
 </div>

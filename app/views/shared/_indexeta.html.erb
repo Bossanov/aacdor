@@ -4,8 +4,7 @@
       <th scope="col">#</th>
       <th scope="col">Nom</th>
       <th scope="col">Adresse</th>
-      <th scope="col">Type</th>
-      <th scope="col">Siret</th>
+
       <th scope="col">Action</th>
 
 
@@ -21,8 +20,7 @@
       <td><%=a.address%><% if a.latitude.nil?%>
          <p><i class="fas fa-exclamation-triangle" style="color:red;">adresse non reconnue</i></p>
         <%end%></td>
-      <td><%=a.typeeta%></td>
-      <td><%=a.siret%></td>
+
       <td>
         <a class="fas fa-pen" href="<%=edit_etablissement_path(a)%>" title="Modifier"></a>
         <a class="fas fa-eye" href="<%=etablissement_path(a)%>" title="Voir"></a>

@@ -1,0 +1,45 @@
+<container style="margin: 40px;">
+
+
+<div class="card text-center" style="margin: 40px;">
+
+  <div class="card-body">
+    <h2 class="card-title">Liste des générateurs(<%=Generateurbase.all.length%>)</h2>
+
+    <a href="<%=new_generateurbasis_path%>" class="btn btn-danger">Nouveau générateur</a>
+  </div>
+
+</div>
+
+ <table class="table" style="margin: 40px;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Marque</th>
+      <th scope="col">Modèle</th>
+      <th scope="col">Type</th>
+      <th scope="col">Action</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <%i = 1%>
+    <%@generateurbases.each do |a|%>
+
+    <tr>
+      <th scope="row"><%=i%></th>
+      <td><%=a.marque%></td>
+      <td><%=a.modele%></td>
+      <td><%=a.typegen%></td>
+      <td>
+        <a class="fas fa-pen" href="<%=edit_generateurbasis_path(a)%>" title="Modifier"></a>
+
+        <a class="fas fa-trash-alt" href="<%=effacer_generateurbase_path(generateurbaseid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce générateur ?')" title="Effacer"></a>
+      </td>
+    </tr>
+    <% i = i + 1%>
+    <%end%>
+  </tbody>
+</table>
+</container>
+

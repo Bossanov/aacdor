@@ -28,15 +28,15 @@
   <tbody>
     <%i = 1%>
     <%@pcrs.each do |a|%>
-
+    <% if a.statut == "yes"%>
     <tr>
       <th scope="row"><%=i%></th>
-      <td><%=a.nom%></td>
+      <td style="color: green;"><%=a.nom%></td>
       <td><%=a.prenom%></td>
       <td><%=a.rue%></td>
       <td><%=a.codepostal%></td>
-      <td><%=a.telephone%></td>
       <td><%=a.ville%></td>
+      <td><%=a.telephone%></td>
 
       <td>
         <a class="fas fa-pen" href="<%=edit_pcr_path(a)%>" title="Modifier"></a>
@@ -47,6 +47,26 @@
 
     </tr>
     <% i = i + 1%>
+    <%else%>
+      <tr>
+      <th scope="row"><%=i%></th>
+      <td style="color: red;"><%=a.nom%></td>
+      <td><%=a.prenom%></td>
+      <td><%=a.rue%></td>
+      <td><%=a.codepostal%></td>
+      <td><%=a.ville%></td>
+      <td><%=a.telephone%></td>
+
+      <td>
+        <a class="fas fa-pen" href="<%=edit_pcr_path(a)%>" title="Modifier"></a>
+        <a class="fas fa-eye" href="<%=pcr_path(a)%>" title="Voir"></a>
+        <a class="fas fa-trash-alt" href="<%=effacer_pcr_path(pcrid: a.id)%>" onClick="return confirm('Voulez-vous réellement retirer ce RCP ?')" title="Effacer"></a>
+
+      </td>
+
+    </tr>
+    <% i = i + 1%>
+    <%end%>
     <%end%>
   </tbody>
 </table>
